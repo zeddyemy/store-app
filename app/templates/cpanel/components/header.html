@@ -1,0 +1,51 @@
+<div class="app-head col-12">
+    <div class="flexCenter app-header">
+        <div class="menu-btn">
+            <div class="ico menuBtn">
+                <i class='bx bx-menu'></i>
+            </div>
+        </div>
+
+        <div class="logo">
+            <span class="site-name"> <a href="{{url_for('ctrlPanel.index')}}"> Dashboard </a> </span>
+            <!--<span class="tagline"> A Nice Header </span> -->
+        </div>
+
+        <div class="flexCenter header-icons">
+            <div class="ico toggle-theme">
+                <i class='bx bxs-moon'></i>
+            </div>
+            
+            <div class="minProfileContainer">
+                <div class="flexCenter minProfile">
+                    <div class="minProfileImg">
+                        {% if CURRENT_USER.profilePic %}
+                        <img src="{{ CURRENT_USER.profilePic }}" alt="CURRENT_USER.firstname">
+                        {% else %}
+                        <img src="{{ url_for('static', filename='img/avatar.png') }}" alt="{{ CURRENT_USER.firstname }}">
+                        {% endif %}
+                    </div>
+                    <div class="minProfileInfo">
+                        <span class="minProfileName">{{ CURRENT_USER.firstname }} {{ CURRENT_USER.lastname }}</span>
+                        <span class="minProfileRole">{{ CURRENT_USER.role }}</span>
+                    </div>
+                    <span class="dropdown-caret"></span>
+                </div>
+                <div class="minProfileMenu">
+                    <div class="minProfile-menuItem currentUserName">
+                        <a href="#">
+                            Signed in as <strong class="css-truncate-target">{{ CURRENT_USER.username }}</strong>
+                        </a>
+                    </div>
+                    <ul class="minProfile-menuItem">
+                        <a href="{{url_for('ctrlPanel.profilePage')}}"> <li> Your profile </li> </a>
+                        <a href="#"> <li> Help </li> </a>
+                        <a href="{{url_for('ctrlPanel.logout')}}"> <li> logout </li> </a>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

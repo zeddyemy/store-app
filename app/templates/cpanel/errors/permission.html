@@ -1,0 +1,19 @@
+{% extends 'cpanel/layouts/main.html' %}
+{% block title %}Permission Error{% endblock %}
+{% block content %}
+
+
+<div class="wrapper">
+    <section class="col-12 main">
+        <section class="errorStatus">
+            <h1>Permission Error</h1>
+            <h2>You do not have access to this page.</h2>
+            <p>Please contact the admin if you fill this is a mistake.</p>
+    
+            {% include 'cpanel/components/err-btn.html' %}
+        </section>
+    </section>
+</div>
+
+
+{% endblock %}

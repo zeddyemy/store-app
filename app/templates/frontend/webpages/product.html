@@ -1,0 +1,58 @@
+{% extends 'frontend/layouts/main.html' %}
+{% block title %} {{ product.name }} {% endblock %}
+
+{% block cssLinks %}
+<link rel="stylesheet" href="{{ url_for('static', filename='frontend/css/product.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<section class="col-12 product-details">
+        <div class="col-6 productImg">
+            <div class="card-img theProductImg">
+                {% if product.product_img %}
+                <img class="lazyload" src="{{ url_for('static', filename='img/no-product-3.png') }}"
+                    data-src="{{ product.getMediumImage() }}" alt="">
+                {% else %}
+                <img src="{{ url_for('static', filename='img/no-product-3.png') }}" alt="">
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-6 productInfo">
+            <div class="contain">
+                <div class="productNameInfo">
+                    <h2 class="productName">{{ product.name }}</h2>
+                    <span class="productPrice"> £{{ product.sellingPrice }}</span>
+                </div>
+                <div class="productOptions">
+                    {% if productSizes != none %}
+                    <div class="sizeOptions">
+                        <span class="SizeTitle">Size</span>
+                        <div class="theSizeOptions">
+                            {% for size in productSizes %}
+                            <label> <input type="radio" name="size" value="{{ size }}" {% if loop.index <= 1 %} checked="" {% endif %}> <span>{{ size }}</span> </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <div class="colorOptions">
+                        <span class="colorTitle">Color</span>
+                        <div class="theColorOptions">
+                            {% for color in productColors %}
+                            <label> 
+                                <input type="radio" name="color" value="{{ color }}" {% if loop.index <= 1 %} checked="" {% endif %}> <span style="background-color: {{color}}"></span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="addToCart">
+                    <button class="btn addCartBtn">Add to cart</button>
+                </div>
+            </div>
+        </div>
+</section>
+
+
+{% endblock %}

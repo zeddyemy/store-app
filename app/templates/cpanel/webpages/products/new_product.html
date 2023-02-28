@@ -1,0 +1,70 @@
+{% extends 'cpanel/layouts/main.html' %}
+{% block title %}Add New Products{% endblock %}
+
+{% block styles %}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="col-12 form-wrapper">
+    <form method="post" class="form" action="{{ url_for('ctrlPanel.addNew_product') }}" id="list-form" enctype="multipart/form-data">
+        {% if 'csrf_token' in form %}
+        {{form.csrf_token}}
+        {% endif %}
+        <h3 class="form-heading">Add a new Product</h3>
+        
+        <div class="col-3 mediaInput flexCenter">
+            <div class="form-group avatar">
+                <img src="{{ url_for('static', filename='img/placeholder.jpg') }}" alt="product image">
+                
+                {{ form.product_img(class_ = 'form-control', placeholder='productImg') }}
+                <button class="upload-btn btn" disabled>Upload</button>
+            </div>
+        </div>
+        <div class="col-9 txtInput">
+            <div class="form-group">
+                <label for="name">Name</label>
+                {{ form.name(class_ = 'form-control', autofocus = true) }}
+            </div>
+    
+            <div class="form-group">
+                <label for="description">Description</label>
+                {{ form.description(class_ = 'form-control', placeholder='Description', autofocus = true) }}
+            </div>
+    
+            
+            <div class="form-group">
+                <label for="actualPrice">Actual Price</label>
+                {{ form.actualPrice(class_ = 'form-control', placeholder='Actual price', autofocus = true) }}
+            </div>
+            
+            <div class="form-group">
+                <label for="sellingPrice">Selling Price</label>
+                {{ form.sellingPrice(class_ = 'form-control', placeholder='Selling price', autofocus = true) }}
+            </div>
+    
+            <div class="form-group dropdown-check-list" tabindex="100">
+                <label for="sizes">Select Available Sizes</label>
+                
+                {{ form.selectAvailableSizes(class_ ='form-control form-checkbox') }}
+            </div>
+    
+            <div class="form-group">
+                <label for="colors">Colors</label>
+                {{ form.colors(class_ = 'form-control', placeholder='colors', autofocus = true) }}
+            </div>
+    
+            <div class="form-group">
+                <label for="productCat">Select category</label>
+                <div class="form-group">
+                {{ form.productCat(class_ = 'form-control', placeholder='Select', autofocus = true) }}
+                </div>
+            </div>
+
+            <input type="submit" value="Publish on site" class="btn">
+        </div>
+    </form>
+</div>
+
+{% endblock %}

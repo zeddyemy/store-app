@@ -1,0 +1,45 @@
+{% extends 'frontend/layouts/main.html' %}
+{% block title %}Latest Products{% endblock %}
+{% block content %}
+
+<section class="col-12 all-products" style="margin-top: 60px;">
+    <div class="secTitle">
+        <div class="theTitle">Latest</div>
+    </div>
+    <article class="all-products-wrapper">
+
+        {% for product in allProducts.items %}
+        <article class="the-products card">
+            <a href="/product/{{ product.slug }}">
+                <div class="card-img product-img">
+                    {% if product.product_img %}
+                    <img class="lazyload" src="{{ url_for('static', filename='img/no-product-3.png') }}" data-src="{{ product.getMediumImage() }}" alt="">
+                    {% else %}
+                    <img src="{{ url_for('static', filename='img/no-product-3.png') }}" alt="">
+                    {% endif %}
+                </div>
+            </a>
+            <div class="card-text">
+                <a href="/product/{{ product.slug }}">
+                    <h2 class="product-title">{{ product.name }}</h2>
+                </a>
+                <span class="product-price">₦ {{ product.sellingPrice }}</span>
+            </div>
+        </article>
+        {% endfor %}
+
+    </article>
+
+    <div class="pagination">
+        <a href="{{url_for('frontend.allProducts', page=allProducts.prev_num)}}"
+            class="page-numbers {% if not allProducts.has_prev %}disabled{% endif %}"> &laquo; </a>
+        {% for page in allProducts.iter_pages() %}
+        <a href="{{ url_for('frontend.allProducts', page=page) }}"
+            class="page-numbers {% if page == allProducts.page %}current{% endif %}">{{ page }}</a>
+        {% endfor %}
+        <a href="{{url_for('frontend.allProducts', page=allProducts.next_num)}}"
+            class="page-numbers {% if not allProducts.has_next %}disabled{% endif %}"> &raquo; </a>
+    </div>
+</section>
+
+{% endblock %}

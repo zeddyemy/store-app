@@ -1,0 +1,22 @@
+{% extends 'frontend/layouts/main.html' %}
+{% block title %}Permission Error{% endblock %}
+
+{% block cssLinks %}
+<link rel="stylesheet" href="{{ url_for('static', filename='frontend/css/err-page.css') }}">
+{% endblock %}
+
+{% block content %}
+
+
+<section class="col-12 main">
+    <section class="errorStatus">
+        <h1>Permission Error</h1>
+        <p>Oops! only users with Admin privileges can access this page.</p>
+        <p>Sorry for the inconvenience, You can go back to the previous page or use the search bar above to find other things on the site.</p>
+        
+        {% include 'frontend/components/err-btn.html' %}
+    </section>
+</section>
+
+
+{% endblock %}

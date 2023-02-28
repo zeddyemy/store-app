@@ -1,0 +1,66 @@
+.error-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    justify-content: center;
+    align-content: center;
+    padding: var(--site-pad);
+}
+
+.errorStatus {
+    width: 100%;
+    padding: 15px;
+    margin: 0 auto;
+    border-radius: 20px;
+    box-shadow: var(--box-shadow);
+    background: beige;
+}
+@media screen and (min-width: 730px) {
+    .errorStatus {
+        max-width: 700px;
+    }
+}
+
+.errorStatus h1,
+.errorStatus h2 {
+    font-size: 35px;
+    font-family: var(--font-two);
+    font-weight: bolder;
+}
+.errorStatus h2 {
+    font-size: 1.4em;
+}
+.errorStatus p {
+    font-family: var(--font-three);
+    margin-block-start: 1.1em;
+    margin-block-end: 0em;
+}
+
+
+.errBtns {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+    padding: 25px 0px 20px;
+}
+a.errBtn {
+    padding: 7px 20px;
+    border-radius: 20px;
+    border: 1px solid var(--outline);
+    background-color: var(--box-background);
+    font-size: 15px;
+    color: var(--body-text-color);
+    text-decoration: none;
+    cursor: pointer;
+}
+a.errBtn:hover {
+    border: 1px solid var(--theme-color);
+}
+a.errBtn span {
+    font-family: var(--font-two);
+    font-size: 13.5px;
+    font-weight: bold;
+    
+}

@@ -1,0 +1,40 @@
+{% extends 'cpanel/layouts/main.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+
+
+<div class="flexCenter app-content-header">
+    <div class="app-content-title">
+        <h1 class="header-txt">Dashboard</h1>
+        <span class="tagline">Detailed information about your store</span>
+    </div>
+    <a href="{{url_for('frontend.index')}}" class="btn addNewBtn">View site</a>
+</div>
+
+<section class="gridImplicit">
+    <div class="card">
+        <div class="card-label">
+            <span>At a Glance</span>
+        </div>
+        <div class="card-content">
+            <a href="{{url_for('ctrlPanel.products')}}"> <span> All products ({{ totalProducts }}) </span> </a>
+            <a href="#"> <span> All Categories ({{ totalCategories }}) </span> </a>
+            <a href="#"> <span> All products ({{ totalProducts }}) </span> </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-label">
+            <span>Your Info</span>
+        </div>
+    </div>
+    
+    <div class="card"></div>
+    <div class="card"></div>
+</section>
+<section class="gridImplicit">
+    <div class="card"></div>
+    <div class="card"></div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'frontend/layouts/main.html' %}
+{% block title %}422...{% endblock %}
+
+{% block cssLinks %}
+<link rel="stylesheet" href="{{ url_for('static', filename='frontend/css/err-page.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="wrapper">
+    <section class="col-12 main">
+        <section class="errorStatus">
+            <h1>422</h1>
+            <h2>Unprocessable</h2>
+
+            <p>The request was well-formed but was unable to be followed due to semantic errors.</p>
+
+            {% include 'frontend/components/err-btn.html' %}
+        </section>
+    </section>
+</div>
+
+{% endblock %}

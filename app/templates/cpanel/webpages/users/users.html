@@ -1,0 +1,86 @@
+{% extends 'cpanel/layouts/main.html' %}
+{% block title %}Users{% endblock %}
+
+{% block headScript %}
+<script>
+    function confirmDelete() {
+        return confirm('You are about to permanently delete this User from your site. \nThis action cannot be undone. \n\'Cancel\' to stop, \'Ok\' to delete')
+    }
+</script>
+{% endblock %}
+
+{% block content %}
+
+<div class="flexCenter app-content-header">
+    <h1 class="app-content-headerText">Users</h1>
+    {% if CURRENT_USER.role == 'administrator' %}
+    <a href="{{url_for('ctrlPanel.addNew_User')}}" class="btn addNewBtn">Add New <span> User </span></a>
+    {% endif %}
+</div>
+
+<div class="table-area-wrapper">
+    <div class="table tableView">
+        <div class="table-header">
+            <div class="table-cell name"> Full Name  </div>
+            <div class="table-cell username"> Username </div>
+
+            <div class="table-cell email"> Email </div>
+            <div class="table-cell date"> Date Joined </div>
+        </div>
+
+        {% for user in allUsers.items %}
+        <div class="table-row" {% if CURRENT_USER.firstname == user.profile.firstname %} style="order: 1;" {% else %} style="order: 2;" {% endif %}>
+            <div class="table-cell name">
+                <span class="cell-content"> 
+                    {{ user.profile.firstname }} {{ user.profile.lastname }} {% if CURRENT_USER.firstname == user.profile.firstname %} (You) {% endif %}
+                </span>
+                <span class="row-action">
+                    {% if CURRENT_USER.firstname == user.profile.firstname %} 
+                    <a href="{{url_for('ctrlPanel.editProfile')}}">edit</a>
+                    {% else %}
+                        {% if CURRENT_USER.role == 'administrator' %}
+                        <a href="{{url_for('ctrlPanel.editUser', slug=user.slug)}}">edit</a>
+                        {% endif %}
+                    {% endif %}
+
+                    <a href="#">View</a>
+
+                    {% if CURRENT_USER.role == 'administrator' %}
+                        {% if CURRENT_USER.firstname != user.profile.firstname %}
+                        <a href="{{url_for('ctrlPanel.del_user', slug=user.slug)}}" class="delete" onclick="return confirmDelete();">delete</a>
+                        {% endif %}
+                    {% endif %}
+                </span>
+            </div>
+            
+            <div class="table-cell username">
+                <span class="cell-label"> Username: </span>
+                <span class="cell-content"> {{ user.username }} </span>
+            </div>
+
+            <div class="table-cell email">
+                <span class="cell-label"> email: </span>
+                <span class="cell-content"> {{ user.email }} </span>
+            </div>
+
+            <div class="table-cell date">
+                <span class="cell-label"> Date Joined: </span>
+                <span class="cell-content"> {{ user.dateCreated }} </span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="pagination">
+    <a href="{{url_for('ctrlPanel.users', page=allUsers.prev_num)}}"
+        class="page-numbers {% if not allUsers.has_prev %}disabled{% endif %}"> &laquo; </a>
+    {% for page in allUsers.iter_pages() %}
+    <a href="{{ url_for('ctrlPanel.users', page=page) }}"
+        class="page-numbers {% if page == allUsers.page %}current{% endif %}">{{ page }}</a>
+    {% endfor %}
+    <a href="{{url_for('ctrlPanel.users', page=allUsers.next_num)}}"
+        class="page-numbers {% if not allUsers.has_next %}disabled{% endif %}"> &raquo; </a>
+</div>
+
+{% endblock %}

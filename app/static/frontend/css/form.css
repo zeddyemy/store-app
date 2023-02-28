@@ -1,0 +1,143 @@
+.wrapper.form-page {
+    margin: 60px 0px 0px 0px;
+    transition: var(--transition);
+}
+
+.wrapper.form-page.expand-wrapper {
+    margin: 120px 0px 0px 0px;
+}
+
+.form-wrapper {
+    padding: var(--site-pad);
+}
+
+.form-wrapper .form {
+    max-width: 630px;
+    padding: 2em 2em 2em 2em;
+    margin: 0em auto;
+    background-color: #fff;
+    color: black;
+    border-radius: var(--rounded-post);
+    box-shadow: var(--box-shadow);
+}
+
+.form-wrapper .form .form-heading {
+    text-align: center;
+}
+
+.form-wrapper .form label {
+    display: block;
+    font-size: 16px;
+    font-family: var(--font-four);
+}
+
+.form-wrapper .form .form-heading,
+.form-wrapper .form .checkbox {
+    margin: 0px 0px 20px 0px;
+}
+
+.form-wrapper .form .checkbox {
+    font-weight: normal;
+}
+
+.form-group {
+    margin: 0px 0px 15px 0px;
+}
+
+.form-group .input-group {
+    width: 100%;
+    border-bottom: 1px solid #e5e5e5;
+    position: relative;
+}
+
+.form-group .input-group i {
+    position: absolute;
+    top: 9px;
+    left: 0px;
+    z-index: 90;
+}
+.form-wrapper .form .form-control {
+    position: relative;
+    height: auto;
+    width: 100%;
+    padding: 7px 1px 7px 25px;
+    line-height: 1.3;
+    font-size: 14px;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #e5e5e5;
+    background-color: inherit;
+    transition: var(--transition);
+}
+
+.form-wrapper .form .form-control:focus {
+    outline: none;
+    border-bottom: 1px solid var(--theme-color);
+    background-color: inherit;
+}
+.form-control:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px #fff inset !important;
+    -webkit-text-fill-color: inherit !important;
+}
+
+.form-wrapper .form input[type="text"],
+.form-wrapper .form input[type="password"] {
+    margin-bottom: -1px;
+}
+
+
+.form-wrapper .form .form-checkbox {
+    list-style: none;
+    display: inline-block;
+}
+.form-checkbox li {
+    font-size: 20px;
+    display: inline-flex;
+    gap: 7px;
+    width: 3.5em;
+    margin: 0px 10px 10px 0px;
+}
+.form-checkbox li label {
+    font-size: 17px !important;
+}
+
+.form-checkbox li input[type="checkbox"] {
+    /* Add if not using autoprefixer */
+    -webkit-appearance: none;
+    appearance: none;
+    /* For iOS < 15 to remove gradient background */
+    background-color: #fff;
+    /* Not removed via appearance */
+    margin: 0;
+    font: inherit;
+    color: currentColor;
+    width: 1.15em;
+    height: 1.15em;
+    border: 0.11em solid var(--theme-color);
+    border-radius: 0.15em;
+    transform: translateY(-0.075em);
+    display: grid;
+    place-content: center;
+}
+.form-checkbox li input[type="checkbox"]:focus {
+    outline: max(1px, 0.11em) solid var(--theme-color);
+    outline-offset: max(2px, 0.12em);
+}
+.form-checkbox li + .form-checkbox li {
+    margin-top: 1em;
+}
+.form-checkbox li input[type="checkbox"]::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em var(--theme-color);
+    /* Windows High Contrast Mode */
+    background-color: CanvasText;
+    transform-origin: bottom left;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+.form-checkbox li input[type="checkbox"]:checked::before {
+    transform: scale(1);
+}

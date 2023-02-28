@@ -1,0 +1,146 @@
+{% extends 'cpanel/layouts/main.html' %}
+{% block title %}{{CURRENT_USER.firstname}} - Edit Profile{% endblock %}
+
+
+{% block content %}
+
+<div class="col-12 form-wrapper">
+    <form method="post" class="form" action="{{ url_for('ctrlPanel.editProfile') }}" id="editProfile-form"
+        enctype="multipart/form-data">
+        {% if 'csrf_token' in form %}
+        {{form.csrf_token}}
+        {% endif %}
+        <h3 class="form-heading">Fill in Your Info</h3>
+
+        <div class="col-3 mediaInput flexCenter">
+            <div class="form-group avatar">
+                {% if CURRENT_USER.profilePic %}
+                <img src="{{ CURRENT_USER.profilePic }}" alt="CURRENT_USER.firstname">
+                {% else %}
+                <img src="{{ url_for('static', filename='img/avatar.png') }}" alt="{{ CURRENT_USER.firstname }}">
+                {% endif %}
+                
+                {{ form.profilePic(class_ = 'form-control', placeholder='profilePic') }}
+                <button class="upload-btn btn" disabled>Edit</button>
+            </div>
+        </div>
+        <div class="col-9 txtInput">
+            <div class="gridImplicit formGap">
+                <span class="form-group title">Basic Info:</span>
+                
+                <div class="form-group">
+                    <label for="firstname">First Name</label>
+                    {{ form.firstname(class_ = 'form-control', value = CURRENT_USER.firstname, autofocus = true) }}
+                    {% for error in form.firstname.errors %}
+                    <div class="alert alert-error form-error" role="alert">
+                        {{ error }}
+                    </div>
+                    {% endfor%}
+                </div>
+                
+                <div class="form-group">
+                    <label for="lastname">Last Name</label>
+                    {{ form.lastname(class_ = 'form-control', value = CURRENT_USER.lastname, autofocus = true) }}
+                    {% for error in form.lastname.errors %}
+                    <div class="alert alert-error form-error" role="alert">
+                        {{ error }}
+                    </div>
+                    {% endfor%}
+                </div>
+                
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    {{ form.username(class_ = 'form-control', value = CURRENT_USER.username, autofocus = true) }}
+                    {% for error in form.username.errors %}
+                    <div class="alert alert-error form-error" role="alert">
+                        {{ error }}
+                    </div>
+                    {% endfor%}
+                </div>
+                            
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    {{ form.email(class_ = 'form-control', placeholder='example@mail.com', value = CURRENT_USER.email, autofocus = true) }}
+                    {% for error in form.email.errors %}
+                    <div class="alert alert-error form-error" role="alert">
+                        {{ error }}
+                    </div>
+                    {% endfor%}
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    {{ form.phone(class_ = 'form-control', value = CURRENT_USER.phone, autofocus = true) }}
+                    {% for error in form.phone.errors %}
+                    <div class="alert alert-error form-error" role="alert">
+                        {{ error }}
+                    </div>
+                    {% endfor%}
+                </div>
+            </div>
+            <div class="gridImplicit formGap">
+                <span class="form-group title">Address:</span>
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    {{ form.country(class_ = 'form-control', value = CURRENT_USER.country, autofocus = true) }}
+                    {% for error in form.country.errors %}
+                    <div class="alert alert-error form-error" role="alert">
+                        {{ error }}
+                    </div>
+                    {% endfor%}
+                </div>
+                            
+                <div class="form-group">
+                    <label for="state">State</label>
+                    {{ form.state(class_ = 'form-control', value = CURRENT_USER.state, autofocus = true) }}
+                    {% for error in form.state.errors %}
+                    <div class="alert alert-error form-error" role="alert">
+                        {{ error }}
+                    </div>
+                    {% endfor%}
+                </div>
+                            
+                <div class="form-group">
+                    <label for="city">City</label>
+                    {{ form.city(class_ = 'form-control', value = CURRENT_USER.city, autofocus = true) }}
+                    {% for error in form.city.errors %}
+                    <div class="alert alert-error form-error" role="alert">
+                        {{ error }}
+                    </div>
+                    {% endfor%}
+                </div>
+                
+                <div class="form-group">
+                    <label for="postalCode">Postal Code</label>
+                    {{ form.postalCode(class_ = 'form-control', value = CURRENT_USER.postalCode, autofocus = true) }}
+                    {% for error in form.postalCode.errors %}
+                    <div class="alert alert-error form-error" role="alert">
+                        {{ error }}
+                    </div>
+                    {% endfor%}
+                </div>
+                
+                <div class="form-group">
+                    <label for="defaultAddress">Address</label>
+                    {{ form.defaultAddress(class_ = 'form-control', value = CURRENT_USER.defaultAddress, autofocus = true) }}
+                    {% for error in form.defaultAddress.errors %}
+                    <div class="alert alert-error form-error" role="alert">
+                        {{ error }}
+                    </div>
+                    {% endfor%}
+                </div>
+                
+            </div>
+            
+            <input type="submit" value="Submit" class="btn">
+        </div>
+        
+
+    </form>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/js/intlTelInput.min.js"></script>
+{% endblock %}

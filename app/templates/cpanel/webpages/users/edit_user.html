@@ -1,0 +1,50 @@
+{% extends 'cpanel/layouts/main.html' %}
+{% block title %}Edit User{% endblock %}
+
+{% block styles %}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="col-12 form-wrapper flexCenter">
+    <form method="post" class="form" action="" id="list-form" enctype="multipart/form-data">
+        {% if 'csrf_token' in form %}
+        {{form.csrf_token}}
+        {% endif %}
+        
+        <h3 class="form-heading">Edit User Info</h3>
+
+        {{ form.existingEmail(value=user.email) }}
+        {{ form.existingUsername(value=user.username) }}
+
+        <div class="form-group">
+            <label for="username">Username</label>
+            {{ form.username(class_ = 'form-control', value = user.username, autofocus = true) }}
+            {% for error in form.username.errors %}
+            <div class="alert alert-error form-error" role="alert">
+                {{ error }}
+            </div>
+            {% endfor%}
+        </div>
+        
+        <div class="form-group">
+            <label for="email">Email</label>
+            {{ form.email(class_ = 'form-control', value = user.email, placeholder='example@mail.com', autofocus = true) }}
+            {% for error in form.email.errors %}
+            <div class="alert alert-error form-error" role="alert">
+                {{ error }}
+            </div>
+            {% endfor%}
+        </div>
+
+        <div class="form-group">
+            <label for="role">Select Role to assign to this user</label>
+            {{ form.role(class_ = 'form-control', placeholder='Select', autofocus = true) }}
+        </div>
+        
+        <input type="submit" value="Add User" class="btn">
+    </form>
+</div>
+
+{% endblock %}

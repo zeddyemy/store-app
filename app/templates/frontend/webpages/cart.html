@@ -1,0 +1,89 @@
+{% extends 'frontend/layouts/main.html' %}
+{% block title %}GUDIE-Cart{% endblock %}
+
+
+{% block cssLinks %}
+<link rel="stylesheet" href="{{ url_for('static', filename='frontend/css/cart.css') }}">
+{% endblock %}
+
+
+{% block content %}
+
+
+<section class="col-12 main">
+    <section class="cartWrapper">
+        {% if CART_COUNT > 0 %}
+            <div class="secTitle cartTitle">
+                <div class="theTitle">Cart</div>
+            </div>
+
+            <section class="theCart">
+                <section class="col-6 cartList all-products-wrapper">
+                    {% for product, quantity in products %}
+                    <article class="cartItem the-products card">
+                        <div class="card-img cartItem-img">
+                            {% if product.product_img %}
+                            <img src="{{ product.getThumbImage() }}" alt="">
+                            {% else %}
+                            <img src="{{ url_for('static', filename='frontend/img/placeholder.png') }}" alt="">
+                            {% endif %}
+                        </div>
+                        <div class="card-text cartItem-txt">
+                            <span class="cartItem-name"> {{ product.name }} </span>
+                            <span class="cartItem-details">Color: pink</span>
+                            <span class="cartItem-details">Size: L</span>
+                            <span class="cartItem-price">₦{{ product.sellingPrice }}</span>
+
+                            <div class="cart-quantity">
+                                <div class="cartAddItem">
+                                    <button class="cartBtn cartMinus" onclick="decrement()">-</button>
+                                    <input class="theQuantity" type="number" id="" name="quantity" min="1" max="5"
+                                        value="{{ quantity }}">
+                                    <button class="cartBtn cartPlus" onclick="increment()">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    {% endfor %}
+                </section>
+
+                <section class="col-6 cartSummary">
+                    <div class="summaryWrapper">
+                        <div class="cartTotal">
+                            <div class="subtotal"> <span>Subtotal</span> <span>$14.99</span> </div>
+                            <div class="delivery"> <span>Delivery</span> <span>$1000</span> </div>
+                            <div class="totalPay"> <span>Total</span> <span>$1000</span> </div>
+                        </div>
+                        <div class="cartNote">
+
+                        </div>
+                        <button class="checkoutBtn btn">Checkout</button>
+
+                    </div>
+                </section>
+            </section>
+        {% else %}
+            <section class="noCart flexCenter">
+                <div class="card noCartCard flexCenter">
+                    <img src="{{ url_for('static', filename='frontend/img/cart.svg') }}" alt="no cart">
+                    <h2 title=""> Your cart is empty. </h2>
+                    <p> You have not added any Product to your cart. </p>
+                    <p> Use the button below to start shopping </p>
+                    <a href="" class="btn start-shopping"> Start Shopping </a>
+                </div>
+            </section>
+        {% endif %}
+    </section>
+</section>
+
+<script>
+    function increment() {
+        document.getElementById('demoInput').stepUp();
+    }
+
+    function decrement() {
+        document.getElementById('demoInput').stepDown();
+    }
+</script>
+
+{% endblock %}

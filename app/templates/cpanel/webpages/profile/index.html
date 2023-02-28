@@ -1,0 +1,60 @@
+{% extends 'cpanel/layouts/main.html' %}
+{% block title %}{{CURRENT_USER.username}}{% endblock %}
+{% block content %}
+
+<div class="flexCenter app-content-header">
+    <h1 class="app-content-headerText">Your Profile</h1>
+    <a href="{{url_for('ctrlPanel.editProfile')}}" class="btn addNewBtn">Edit</a>
+</div>
+
+<section class="gridImplicit">
+    <div class="card fullProfileCard">
+        <div class="flexCenter profileAvatarName col-3">
+            <div class="profileAvatar">
+                {% if CURRENT_USER.profilePic %}
+                <img src="{{ CURRENT_USER.profilePic }}" alt="CURRENT_USER.firstname">
+                {% else %}
+                <img src="{{ url_for('static', filename='img/avatar.png') }}" alt="{{ CURRENT_USER.firstname }}">
+                {% endif %}
+            </div>
+            <div class="profileName">
+                <span class="theProfileName">{{ CURRENT_USER.firstname }} {{ CURRENT_USER.lastname }}</span>
+                <span class="role">{{ CURRENT_USER.role }}</span>
+            </div>
+        </div>
+        <div class="profileDetails col-9">
+            <div class="pInfo">
+                <span class="label">Username</span>
+                <span>{{ CURRENT_USER.username }}</span>
+            </div>
+
+            <div class="pInfo">
+                <span class="label">Email</span>
+                <span>{{ CURRENT_USER.email }}</span>
+            </div>
+            <div class="pInfo">
+                <span class="label">Phone number</span>
+                <span>{{ CURRENT_USER.phone }}</span>
+            </div>
+            <div class="pInfo">
+                <span class="label">Default Address</span>
+                <span>13, Raji Gbadamosi Close</span>
+            </div>
+            <div class="pInfo">
+                <span class="label">State</span>
+                <span>{{ CURRENT_USER.state }}</span>
+            </div>
+            <div class="pInfo">
+                <span class="label">Country</span>
+                <span>{{ CURRENT_USER.country }}</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="gridImplicit">
+    <div class="card"></div>
+    <div class="card"></div>
+</section>
+
+{% endblock %}

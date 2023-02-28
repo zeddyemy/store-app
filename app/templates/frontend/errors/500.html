@@ -1,0 +1,20 @@
+{% extends 'frontend/layouts/main.html' %}
+{% block title %}500...{% endblock %}
+
+{% block cssLinks %}
+<link rel="stylesheet" href="{{ url_for('static', filename='frontend/css/err-page.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<section class="col-12 main">
+    <section class="errorStatus">
+        <h1>500</h1>
+        <h2>Internal server error</h2>
+        <p>Sorry about this. It's not your fault. An we are working on fixing this.</p>
+        
+        {% include 'frontend/components/err-btn.html' %}
+    </section>
+</section>
+
+{% endblock %}

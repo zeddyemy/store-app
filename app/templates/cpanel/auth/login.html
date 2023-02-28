@@ -1,0 +1,27 @@
+{% extends 'cpanel/layouts/main.html' %}
+{% block title %}Login{% endblock %}
+{% block content %}
+
+<div class="form-wrapper">
+    <form method="post" class="form" id="login-form" enctype="multipart/form-data">
+        {% if 'csrf_token' in form %}
+        {{form.csrf_token}}
+        {% endif %}
+        <h3 class="form-heading">Login</h3>
+        <div class="form-group">
+            <label for="emailUsername">Email</label>
+            {{ form.emailUsername(class_ = 'form-control', placeholder='example@mail.com', autofocus = true) }}
+        </div>
+
+        <div class="form-group">
+            <label for="pwd">Password</label>
+            <div class="form-group">
+                {{ form.pwd(class_ = 'form-control', placeholder='password', autofocus = true) }}
+            </div>
+        </div>
+
+        <input type="submit" value="Login" class="btn">
+    </form>
+</div>
+
+{% endblock %}

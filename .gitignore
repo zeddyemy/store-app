@@ -1,0 +1,6 @@
+.vscode/
+env/
+migrations/
+public/
+todo
+gt.md

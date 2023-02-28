@@ -1,0 +1,127 @@
+.gridImplicit {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30ch, 1fr)) !important;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+@media screen and (max-width: 800px) {
+    .gridImplicit {
+        gap: 0.9rem !important;
+    }
+}
+
+.card {
+    height: 300px;
+    border-radius: var(--rounded-post);
+    transition: var(--transition);
+    -moz-box-shadow: var(--box-shadow);
+    -webkit-box-shadow: var(--box-shadow);
+    box-shadow: var(--box-shadow);
+    background-color: var(--box-background);
+    text-align: left;
+    color: var(--body-text-color);
+    position: relative;
+}
+.card-label {
+    padding: 15px;
+    border-bottom: 1px solid #4a47474f;
+}
+.card-label span {
+    color: var(--body-text-color);
+    font-size: 19px;
+    font-weight: bold;
+}
+.card-content {
+    padding: 15px;
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    row-gap: 20px;
+}
+.card-content a {
+    color: var(--action-color);
+    text-decoration: none;
+}
+.card-content span {
+    width: 50%;
+}
+
+.fullProfileCard {
+    grid-column: 1 / span 1;
+    overflow: hidden;
+    width: 100%;
+}
+.fullProfileCard::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+.profileAvatarName,
+.profileDetails {
+    padding: 20px;
+    height: 100%;
+}
+
+.profileAvatarName {
+    width: 25%;
+    flex-direction: column;
+    border-right: 1px solid var(--outline);
+}
+.profileAvatar {
+    --avatarSize: 100px;
+    height: var(--avatarSize);
+    width: var(--avatarSize);
+    border-radius: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.profileAvatar img {
+    border-radius: 50%;
+}
+.profileName {
+    text-align: center;
+    margin: 10px 0px;
+}
+.profileName .theProfileName,
+.profileName .role {
+    display: block;
+}
+.profileName .theProfileName {
+    font-weight: bold;
+}
+.profileName .role {
+    color: grey;
+    font-size: 14px;
+}
+
+.profileDetails {
+    width: 75%;
+    display: grid;
+    grid-template-columns: auto auto;
+    align-content: center;
+    justify-items: start;
+    gap: 20px;
+}
+.profileDetails span {
+    display: block;
+}
+.profileDetails .label {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+@media screen and (max-width: 640px) {
+    .fullProfileCard {
+        height: unset;
+    }
+    .profileAvatarName,
+    .profileDetails {
+        width: 100%;
+        height: unset;
+    }
+    .profileDetails {
+        grid-template-columns: auto;
+    }
+}

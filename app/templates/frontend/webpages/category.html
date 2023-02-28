@@ -1,0 +1,149 @@
+{% extends 'frontend/layouts/main.html' %}
+{% block title %} {{ category.name }} {% endblock %}
+
+{% block cssLinks %}
+<link rel="stylesheet" href="{{ url_for('static', filename='frontend/css/category.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='frontend/library/flickity/flickity.css') }}" media="screen">
+{% endblock %}
+
+{% block content %}
+
+<section class="col-12 page-head category-head" style="background-image: url({{category.getMediumImage()}});">
+        
+        <div class="head-container cat-head-container">
+            <h2 class="title">
+                {{ category.name }}
+            </h2>
+        </div>
+</section>
+
+<section class="col-12 main">
+        <section class="category-list cat-page-tab">
+
+            {% if subCategories %}
+            <div class="secTitle">
+                <div class="theTitle">Categories</div>
+            </div>
+
+            <div class="theTabs js-flickity" id="theTabs"
+                data-flickity-options='{ "pageDots": false, "cellAlign": "left", "contain": true, "percentPosition": false, "setGallerySize": false, "prevNextButtons": false}'>
+                <a href="#">
+                    <div class="theTabs-item {% if productCat == category.slug %} active {% endif %}" id="{{ category.id }}" data-slug="{{ category.slug }}">
+                        All
+                    </div>
+                </a>
+
+                {% for subCat in subCategories %}
+                <a href="#">
+                    <div class="theTabs-item {% if productCat == subCat.slug %} active {% endif %}" id="{{ subCat.id }}" data-slug="{{ subCat.slug }}">
+                        {{ subCat.name }}
+                    </div>
+                </a>
+                {% endfor %}
+                
+            </div>
+            {% endif %}
+
+            {% if allProducts %}
+            <article class="all-products-wrapper" id="all-products-wrapper">
+            {% if allProducts.items %}
+                {% for product in allProducts.items %}
+                <article class="the-products card {{ product.category_id }}">
+                    <a href="/product/{{ product.slug }}">
+                        <div class="card-img product-img">
+                            {% if product.product_img %}
+                            <img src="{{ product.getMediumImage() }}" alt="">
+                            {% else %}
+                            <img src="{{ url_for('static', filename='frontend/img/placeholder.png') }}" alt="">
+                            {% endif %}
+                        </div>
+                    </a>
+                    <div class="card-text">
+                        <a href="/product/{{ product.slug }}">
+                            <h2 class="product-title">{{ product.name }}</h2>
+                        </a>
+                        <span class="product-price">{{ product.sellingPrice }}</span>
+                        <span class="btn add-to-cart" id="" data-product_id="{{ product.id }}">+</span>
+                    </div>
+                </article>
+                {% endfor %}
+            {% else %}
+                <article class="the-products card no-products">
+                    <p> Oops! There are no Products in this category </p>
+                </article>
+            {% endif %}
+            </article>
+            {% endif %}
+
+            <div class="pagination" id="pagination">
+                <a href="{{url_for('frontend.showCatProducts', slug=category.slug, page=allProducts.prev_num)}}"
+                    class="page-numbers {% if not allProducts.has_prev %}disabled{% endif %}"> &laquo; </a>
+                {% for page in allProducts.iter_pages() %}
+                <a href="{{ url_for('frontend.showCatProducts', slug=category.slug, page=page) }}"
+                    class="page-numbers {% if page == allProducts.page %}current{% endif %}">{{ page }}</a>
+                {% endfor %}
+                <a href="{{url_for('frontend.showCatProducts', slug=category.slug, page=allProducts.next_num)}}"
+                    class="page-numbers {% if not allProducts.has_next %}disabled{% endif %}"> &raquo; </a>
+            </div>
+            
+        </section>
+</section>
+
+<div class="boxLoading" id="loading">
+        <img src="{{ url_for('static', filename='frontend/img/load-1.svg') }}" alt="loading">
+</div>
+
+<script src="{{ url_for('static', filename='frontend/js/get-products.js') }}"></script>
+<script>
+    const addToCartBtns = document.querySelectorAll('.add-to-cart');
+
+    addToCartBtns.forEach(function (addBtn) {
+        addBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            const productId = this.dataset.product_id;
+            const url = '/add-to-cart/' + productId;
+            
+            console.log('Add-to-cart button Clicked', e);
+            console.log('productId ----->>>>', productId);
+
+            // Send a POST request to the server to add the product to the cart
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({}), // empty JSON object
+                credentials: 'include'
+            })
+            .then(function (response) {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(function (jsonResponse) {
+                console.log(jsonResponse)
+                const success = jsonResponse['success'];
+                const cartCount = document.querySelector('.cart-count');
+                let count = 0;
+                // Update the cart count display
+                if (success === true) {
+                    console.log('Product added to cart');
+                    const count = jsonResponse['cart_count'];
+                    cartCount.textContent = count;
+                } else {
+                    console.error('Error adding product to cart');
+                    alert('Error adding product to cart.');
+                    cartCount.textContent = 0;
+                }
+            })
+            .catch(function (error) {
+                console.error('There was a problem with the fetch operation:', error);
+                cartCount.textContent = -0;
+                throw error;
+            });
+        });
+    });
+</script>
+
+{% endblock %}

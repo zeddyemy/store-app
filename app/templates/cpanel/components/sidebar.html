@@ -1,0 +1,51 @@
+<div class="sidebar">
+    <div class="sidebar-header">
+        <i class='bx bx-x'></i>
+    </div>
+
+    <ul class="sidebar-list">
+        <li class="sidebar-list-item {% if page == 'cpanel' %} active {% endif %}">
+            <a href="{{url_for('ctrlPanel.index')}}">
+                <i class="bx bx-home"></i>
+                <span>Home</span>
+            </a>
+        </li>
+        <li class="sidebar-list-item {% if page == 'products' %} active {% endif %}">
+            <a href="{{url_for('ctrlPanel.products')}}">
+                <i class='bx bx-shopping-bag'></i>
+                <span>Products</span>
+            </a>
+        </li>
+        <li class="sidebar-list-item {% if page == 'categories' %} active {% endif %}">
+            <a href="{{url_for('ctrlPanel.categories')}}">
+                <i class='bx bx-category'></i>
+                <span>Categories</span>
+            </a>
+        </li>
+        <li class="sidebar-list-item">
+            <a href="#">
+                <i class='bx bx-stats'></i>
+                <span>Analytics</span>
+            </a>
+        </li>
+        <li class="sidebar-list-item {% if page == 'users' %} active {% endif %}">
+            <a href="{{url_for('ctrlPanel.users')}}">
+                <i class='bx bx-user'></i>
+                <span>users</span>
+            </a>
+        </li>
+        <li class="sidebar-list-item">
+            <a href="#">
+                <i class='bx bx-bell'></i>
+                <span>Notifications</span>
+            </a>
+        </li>
+        <li class="sidebar-list-item collapse">
+            <a href="#">
+                <i class='bx bx-arrow-back'></i>
+                <span>Collapse menu</span>
+            </a>
+        </li>
+    </ul>
+
+</div>

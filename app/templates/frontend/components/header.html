@@ -1,0 +1,41 @@
+<!-- Fixed navbar -->
+<header class="default header" id="header">
+    <div class="navbar">
+
+        <div class="logo">
+            <span class="site-name"> <a href="{{url_for('frontend.index')}}"> Gudie </a> </span>
+            <!--<span class="tagline"> A Nice Header </span> -->
+        </div>
+
+        <div class="header-icons">
+            <div class="ico trigger-search">
+                <i class='bx bx-search'></i>
+            </div>
+            
+            <div class="ico btn-toggle">
+                <i class='bx bxs-moon'></i>
+            </div>
+            
+            <a href="{{url_for('frontend.cart')}}" style="text-decoration: none;">
+                <div class="ico cart-btn">
+                    <i class="bx bxs-cart-alt"></i>
+                    <i class="cart-count">{{ CART_COUNT }}</i>
+                </div>
+            </a>
+
+            <div class="ico menuBtn">
+                <i class='bx bx-menu-alt-right'></i>
+            </div>
+
+        </div>
+
+        <div class="search-bar">
+            <form role="search" method="get" class="search-form" action="">
+                <input type="text" class="search-field" placeholder="Search …" value="" name="s">
+                <button type="submit" class="search-btn search-submit" value="Search" aria-label="search button"> <i
+                        class="bx bx-search"></i> </button>
+            </form>
+        </div>
+
+    </div>
+</header>

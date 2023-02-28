@@ -1,0 +1,21 @@
+/* if backdrop support: very transparent and blurred */
+@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+    .app-body {
+        background: var(--body-background), var(--noise) !important;
+        -webkit-backdrop-filter: blur(80px);
+        backdrop-filter: blur(80px);
+    }
+    .the-products {
+        -webkit-backdrop-filter: blur(1px);
+        backdrop-filter: blur(1px);
+        background-image: url(../img/noise.png) !important;
+    }
+    .card {
+        -webkit-backdrop-filter: blur(6px);
+        backdrop-filter: blur(6px);
+    }
+}
+
+:root {
+    --noise: url(../img/noise-4.png);
+}

@@ -1,0 +1,39 @@
+/*---------------------------------------
+    StyleSheet to make site responsive
+----------------------------------------*/
+
+/* For mobile phones: */
+[class*="col-"] {
+    width:100%;
+    float: left;
+}
+:root {
+    --col-1: 8.33%;
+    --col-2: 16.66%;
+    --col-3: 25%;
+    --col-4: 33.33%;
+    --col-5: 41.66%;
+    --col-6: 50%;
+    --col-7: 58.33%;
+    --col-8: 66.66%;
+    --col-9: 75%;
+    --col-10: 83.33%;
+    --col-11: 91.66%;
+    --col-12: 100%;
+}
+
+@media screen and (min-width: 999px) {
+    /* For Desktop */
+    .col-1 {width: var(--col-1)}
+	.col-2 {width: var(--col-2)}
+	.col-3 {width: var(--col-3)}
+	.col-4 {width: var(--col-4)}
+	.col-5 {width: var(--col-5)}
+	.col-6 {width: var(--col-6)}
+	.col-7 {width: var(--col-7)}
+	.col-8 {width: var(--col-8)}
+	.col-9 {width: var(--col-9)}
+	.col-10 {width: var(--col-10)}
+	.col-11 {width: var(--col-11)}
+	.col-12 {width: var(--col-12)}
+}

@@ -1,0 +1,203 @@
+.formGap {
+    gap: 15px 30px;
+}
+.form-wrapper .form {
+    width: 100%;
+    padding: 2em 2em;
+    margin: 0em auto;
+    background-color: var(--box-background);
+    color: var(--body-text-color);
+    border-radius: var(--rounded-post);
+    box-shadow: var(--box-shadow);
+}
+.form-wrapper .form::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+.form .mediaInput {
+    padding: 0em;
+    padding-right: 2em;
+    margin-right: 0px;
+    --avatarSize: 200px;
+    height: var(--avatarSize);
+}
+.mediaInput .avatar {
+    display: inline-block;
+    width: var(--avatarSize);
+    height: 100%;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    box-shadow: var(--box-shadow);
+    border: 0.05em solid var(--outline);
+    background: var(--box-background);
+    background-size: cover;
+    background-position: center;
+}
+.avatar img {
+    border-radius: 50%;
+}
+.avatar input[type="file"] {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100% !important;
+    height: 100% !important;
+    padding: 0px !important;
+    z-index: 99;
+}
+.avatar .upload-btn {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 70px;
+    height: 30px;
+    line-height: 30px;
+    padding: 0px;
+    font-size: 13px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block !important;
+    z-index: 0;
+}
+
+.form-group {
+    margin: 0px 0px 15px 0px;
+}
+span.form-group.title {
+    grid-column: 1 / -1;
+    font-family: var(--font-two);
+    font-size: 19px;
+    padding: 0px 8px;
+    margin: 20px 0px 0px 0px;
+    border-left: 5px solid var(--action-color);
+}
+.form-wrapper .form .form-heading {
+    text-align: center;
+}
+
+.form-wrapper .form label {
+    display: block;
+    font-size: 14px;
+    font-family: var(--font-four);
+    font-weight: bold;
+}
+
+.form-wrapper .form .form-heading,
+.form-wrapper .form .checkbox {
+    margin: 0px 0px 20px 0px;
+}
+
+.form-wrapper .form .checkbox {
+    font-weight: normal;
+}
+
+.form-wrapper .form .form-control {
+    position: relative;
+    height: 40px;
+    width: 100%;
+    padding: 5px 10px;
+    font-size: 15px;
+    outline: none;
+    border: 2px solid #e5e5e5;
+    border-radius: 5px;
+    font-family: var(--font-four);
+    color: var(--body-text-color);
+    background-color: var(--box-background);
+    transition: var(--transition);
+}
+
+.form-wrapper .form .form-control:focus {
+    outline: none;
+    border: 2px solid var(--action-color);
+    color: var(--body-text-color);
+}
+
+.form-wrapper .form input[type="text"],
+.form-wrapper .form input[type="password"] {
+    margin-bottom: -1px;
+}
+
+.form-wrapper .form input.first-input {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.form-wrapper .form input.last-input {
+    margin-bottom: 10px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.back-home {
+    margin-top: 10px;
+}
+
+.form-wrapper .form .form-checkbox {
+    list-style: none;
+    display: inline-block;
+    height: fit-content;
+}
+.form-checkbox li {
+    font-size: 20px;
+    display: inline-flex;
+    gap: 7px;
+    width: 3.5em;
+    margin: 0px 10px 10px 0px;
+}
+.form-checkbox li label {
+    font-size: 17px !important;
+}
+
+.form-checkbox li input[type="checkbox"] {
+    /* Add if not using autoprefixer */
+    -webkit-appearance: none;
+    appearance: none;
+    /* For iOS < 15 to remove gradient background */
+    background-color: var(--body-background);
+    /* Not removed via appearance */
+    margin: 0;
+    font: inherit;
+    color: currentColor;
+    width: 1.15em;
+    height: 1.15em;
+    border: 0.11em solid var(--action-color);
+    border-radius: 0.15em;
+    transform: translateY(-0.075em);
+    display: grid;
+    place-content: center;
+}
+.form-checkbox li input[type="checkbox"]:focus {
+    outline: max(1px, 0.01em) solid var(--action-color);
+    outline-offset: max(2px, 0.12em);
+}
+.form-checkbox li + .form-checkbox li {
+    margin-top: 1em;
+}
+.form-checkbox li input[type="checkbox"]::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em var(--action-color);
+    /* Windows High Contrast Mode */
+    background-color: CanvasText;
+    transform-origin: bottom left;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+.form-checkbox li input[type="checkbox"]:checked::before {
+    transform: scale(1);
+}
+
+@media screen and (max-width: 1024px) {
+    .form .mediaInput {
+        padding-right: 0em;
+        --avatarSize: 160px;
+        height: var(--avatarSize);
+    }
+}

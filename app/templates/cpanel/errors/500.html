@@ -1,0 +1,19 @@
+{% extends 'cpanel/layouts/main.html' %}
+{% block title %}500...{% endblock %}
+{% block content %}
+
+<div class="wrapper">
+    <section class="col-12 main">
+        <section class="errorStatus">
+            <h1>500</h1>
+            <h2>Internal server error</h2>
+            <p>Sorry about this. It's not your fault. An we are working on fixing this.</p>
+            
+            {% include 'cpanel/components/err-btn.html' %}
+        </section>
+    </section>
+</div>
+
+
+
+{% endblock %}

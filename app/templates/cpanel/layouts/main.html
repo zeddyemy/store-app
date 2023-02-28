@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='cpanel/css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='cpanel/css/responsive.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='cpanel/css/home.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='cpanel/css/header-side.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='cpanel/css/products.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='cpanel/css/table.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='cpanel/css/form.css') }}">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='library/boxicons/css/boxicons.css') }}">
+    {% block styles %}
+    {% endblock %}
+
+    {% if page == 'error' %}
+    {% include 'cpanel/components/styles/err-page.css.html' %}
+    {% endif %}
+
+    {% if page == 'auth' %}
+    {% include 'cpanel/components/styles/auth-page.css.html' %}
+    {% endif %}
+
+    {% block headScript %}
+    {% endblock %}
+
+</head>
+<body>
+    
+    <div class="app-container">
+        {% if current_user.is_authenticated %}
+            {% include 'cpanel/components/header.html' %}
+            {% include 'cpanel/components/sidebar.html' %}
+        {% endif %}
+        
+        <div class="app-content {% if page == 'auth' %} login-sign-up {% endif %}" tabindex="0">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="flexCenter alert {{ category }}">
+                <div class="alert-txt">
+                    {{ message }} {% if category == 'info login' %} Go to  <a href="{{ url_for('ctrlPanel.login') }}"> login page</a> {% endif %}
+                </div>
+                <a class="close" data-dismiss="alert">&times;</a>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+        
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+    
+    {% if current_user.is_authenticated %}
+    <script src="{{ url_for('static', filename='cpanel/js/sidebar.js') }}"></script>
+    <script src="{{ url_for('static', filename='cpanel/js/main.js') }}"></script>
+    {% endif %}
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <script src="{{ url_for('static', filename='cpanel/js/alert.js') }}"></script>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    
+    <script src="{{ url_for('static', filename='cpanel/js/darkmode.js') }}"></script>
+    {% block scripts %}
+    {% endblock %}
+</body>
+</html>

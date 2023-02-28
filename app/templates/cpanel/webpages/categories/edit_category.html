@@ -1,0 +1,54 @@
+{% extends 'cpanel/layouts/main.html' %}
+{% block title %}Edit Category{% endblock %}
+
+{% block styles %}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="col-12 form-wrapper flexCenter">
+    <form method="post" class="form" action="" id="list-form" enctype="multipart/form-data">
+        {% if 'csrf_token' in form %}
+        {{form.csrf_token}}
+        {% endif %}
+        <h3 class="form-heading">Edit Category</h3>
+
+        <div class="col-3 mediaInput flexCenter">
+            <div class="form-group avatar">
+                {% if category.cat_img %}
+                <img src="{{ category.cat_img }}" alt="{{ category.name }}">
+                {% else %}
+                <img src="{{ url_for('static', filename='img/placeholder.jpg') }}" alt="category image">
+                {% endif %}
+
+                {{ form.cat_img(class_ = 'form-control', placeholder='cat_img') }}
+                <button class="upload-btn btn" disabled>Edit</button>
+            </div>
+        </div>
+
+        <div class="col-9 txtInput">
+            <div class="form-group">
+                <label for="name">Name</label>
+                {{ form.name(class_ = 'form-control', value = category.name, autofocus = true) }}
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                {{ form.description(class_ = 'form-control', value = category.description, autofocus = true) }}
+            </div>
+
+            <div class="form-group">
+                <label for="parent_cat">Select Parent category</label>
+                <div class="form-group">
+                    {{ form.parent_cat(class_ = 'form-control', placeholder='Select', autofocus = true) }}
+                </div>
+            </div>
+            <input type="submit" value="Submit" class="btn btn-primary">
+        </div>
+
+    </form>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'frontend/layouts/main.html' %}
+{% block title %}Sign Up{% endblock %}
+
+{% block internalCss %}
+{% include 'frontend/auth/auth-styles.html' %}
+{% endblock %}
+
+{% block content %}
+
+<div class="col-12 form-wrapper">
+        <form method="post" class="form" action="{{ url_for('frontend.signUp') }}" id="signup-form"
+            enctype="multipart/form-data">
+            {% if 'csrf_token' in form %}
+            {{form.csrf_token}}
+            {% endif %}
+            <h3 class="form-heading"> Fill in Your Info </h3>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <div class="input-group">
+                    <i class='bx bx-user-check'></i>
+                    {{ form.username(class_ = 'form-control', placeholder='Type in your preferred username', autofocus = true) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <div class="input-group">
+                    <i class='bx bx-mail-send'></i>
+                    {{ form.email(class_ = 'form-control', placeholder='example@mail.com', autofocus = true) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <div class="input-group">
+                    <i class='bx bx-user'></i>
+                    {{ form.fullName(class_ = 'form-control', placeholder='Type in your Full Name', autofocus = true) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-group">
+                    <i class='bx bx-lock'></i>
+                    {{ form.password(class_ = 'form-control', placeholder='Type in your preferred Password') }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPasswd">Confirm Password</label>
+                <div class="input-group">
+                    <i class='bx bx-lock'></i>
+                    {{ form.confirmPasswd(class_ = 'form-control', placeholder='confirm your password') }}
+                </div>
+            </div>
+
+            <input type="submit" value="Sign Up" class="btn">
+            <div class="alternative-auth">
+                <span>Already Have an account? <a href="{{ url_for('frontend.login') }}">Login here</a></span>
+            </div>
+        </form>
+</div>
+
+{% endblock %}

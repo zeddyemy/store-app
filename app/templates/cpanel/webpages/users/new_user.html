@@ -1,0 +1,81 @@
+{% extends 'cpanel/layouts/main.html' %}
+{% block title %}Add New User{% endblock %}
+{% block content %}
+
+<div class="col-12 form-wrapper">
+    <form method="post" class="form" action="{{ url_for('ctrlPanel.addNew_User') }}" id="signup-form"
+        enctype="multipart/form-data">
+        {% if 'csrf_token' in form %}
+        {{form.csrf_token}}
+        {% endif %}
+        <h3 class="form-heading">Fill in User Info</h3>
+        <div class="form-group">
+            <label for="username">Username</label>
+            {{ form.username(class_ = 'form-control', autofocus = true) }}
+            {% for error in form.username.errors %}
+            <div class="alert alert-error form-error" role="alert">
+                {{ error }}
+            </div>
+            {% endfor%}
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            {{ form.email(class_ = 'form-control', placeholder='example@mail.com', autofocus = true) }}
+            {% for error in form.email.errors %}
+            <div class="alert alert-error form-error" role="alert">
+                {{ error }}
+            </div>
+            {% endfor%}
+        </div>
+
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            {{ form.firstname(class_ = 'form-control', autofocus = true) }}
+            {% for error in form.firstname.errors %}
+            <div class="alert alert-error form-error" role="alert">
+                {{ error }}
+            </div>
+            {% endfor%}
+        </div>
+        
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            {{ form.lastname(class_ = 'form-control', autofocus = true) }}
+            {% for error in form.lastname.errors %}
+            <div class="alert alert-error form-error" role="alert">
+                {{ error }}
+            </div>
+            {% endfor%}
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            {{ form.password(class_ = 'form-control', placeholder='password', autofocus = true) }}
+            
+            {% for error in form.password.errors %}
+            <div class="alert alert-error form-error" role="alert">
+                {{ error }}
+            </div> {% endfor%}
+        </div>
+
+        <div class="form-group">
+            <label for="confirmPasswd">Confirm Password</label>
+            {{ form.confirmPasswd(class_ = 'form-control', placeholder='confirm password', autofocus = true) }}
+            
+            {% for error in form.confirmPasswd.errors %}
+            <div class="alert alert-error form-error" role="alert">
+                {{ error }}
+            </div> {% endfor%}
+        </div>
+
+        <div class="form-group">
+            <label for="role">Select Role to assign to this user</label>
+            {{ form.role(class_ = 'form-control', placeholder='Select', autofocus = true) }}
+        </div>
+
+        <input type="submit" value="Add User" class="btn">
+    </form>
+</div>
+
+{% endblock %}
