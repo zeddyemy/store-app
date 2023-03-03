@@ -1,6 +1,7 @@
 .vscode/
 env/
 migrations/
+__pycache__/
 public/
 todo
 gt.md
