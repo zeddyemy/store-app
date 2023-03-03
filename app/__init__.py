@@ -12,10 +12,17 @@ from app.appfunctions import urlParts
 
 from config import Config
 from app.extensions import db
+from app.models.cart import Cart, CartProduct, cart_products
+from app.models.category import Category
+from app.models.product import Product
+from app.models.person import Person, Profile, Address
+from app.models.image import Image
+from app.models.role import Role
 from app.context_processors import myContextProcessor
 
 import collections
 collections.Callable = collections.abc.Callable
+
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -24,7 +31,10 @@ def create_app(config_class=Config):
 
     # Initialize Flask extensions here
     db.init_app(app) # changed from db = SQLAlchemy(app)
-    migrate = Migrate(app, db)
+    
+    # create tables
+    with app.app_context():
+        db.create_all()
     
     #Login Configuration
     login_manager = LoginManager()
