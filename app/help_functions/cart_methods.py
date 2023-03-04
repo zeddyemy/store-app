@@ -36,16 +36,16 @@ def sync_cart():
         response = make_response('')
         return response
 
-def getCartCount():
+def getCartCount(userId=''):
     cart_count = 0
-    if current_user.is_authenticated:
-        cart = Cart.query.filter_by(person_id=current_user.id).first()
+    if userId or current_user.is_authenticated:
+        cart = Cart.query.filter_by(person_id=userId or current_user.id).first()
         if cart:
             cart_count = sum(cart_product.quantity for cart_product in cart.cart_products)
     else:
-        cart_items = request.cookies.get('cart_items')
-        if cart_items:
-            cart_items = json.loads(cart_items)
-            cart_count = sum([item['quantity'] for item in cart_items])
+        getCartItems = request.cookies.get('cart_items')
+        if getCartItems:
+            cartItems = json.loads(getCartItems)
+            cart_count = sum([item['quantity'] for item in cartItems])
     
     return cart_count

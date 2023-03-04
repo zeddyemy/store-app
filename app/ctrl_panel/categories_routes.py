@@ -39,20 +39,22 @@ def addNew_category():
     
     if request.method == 'POST':
         if form.validate_on_submit():
+            # get form data
+            name = form.name.data
+            description = form.description.data
+            parent_cat = form.parent_cat.data
+            cat_img = form.cat_img.data
+            slug = slugify(name)
+            
             try:
-                # get form data
-                name = form.name.data
-                description = form.description.data
-                parent_cat = form.parent_cat.data
-                cat_img = form.cat_img.data
-                slug = slugify(name)
+                # TODO: add functionality to check if category already exist in DB
                 
+                # Save the image file and return the id of the image in db
                 if cat_img:
-                    cat_img = saveImage(cat_img) # This saves image file and return the id of the image in db
+                    cat_img = saveImage(cat_img)
                 if not cat_img:
                     cat_img = ""
                 
-                # TODO: add functionality to check if category already exist in DB
                 # get category from db where the name is same as parent_cat
                 categoryFromDb = Category.query.filter(Category.name == parent_cat).first()
                 if categoryFromDb:
@@ -63,19 +65,20 @@ def addNew_category():
                 newCategory = Category(name=name, description=description, cat_img=cat_img, parent_id=parent_id, slug=slug)
                 db.session.add(newCategory)
                 db.session.commit()
-            except:
+            except Exception as e:
                 error = True
+                error_msg = f"An error occurred. {name} could not be created. \n Error: {e}"
                 db.session.rollback()
                 print(sys.exc_info())
             finally:
                 db.session.close()
             if error:
-                flash('An error occurred. ' + request.form['name'] + ' could not be created.', 'error')
+                flash(error_msg, "error")
                 print(description + ', ' + name + ', ')
                 abort(500)
             else:
                 # on successful db insert, flash success
-                flash(request.form['name'] + ' was successfully created!', 'success')
+                flash(f"{name} was successfully created!", "success")
         else:
             print("\n\n", form.errors, "\n\n")
             flash("New category was not created successfully.", 'error')
@@ -128,7 +131,7 @@ def edit_category(slug):
                 db.session.commit()
             except Exception as e:
                 error = True
-                errMsg = e
+                errMsg = f"An error occurred. {slug} could not be updated \n. Error: {e}"
                 db.session.rollback()
                 print(sys.exc_info())
                 raise
@@ -138,7 +141,6 @@ def edit_category(slug):
                 # on unsuccessful db insert, flash an error instead.
                 # flash('An error occurred. we could not sign you Up. Please Try Again!', 'error')
                 flash(f'{errMsg} - Please Try Again!', "error")
-                print("\n\n there was an error >>>>", name )
                 abort(500)
             else:
                 # on successful db insert, flash success
