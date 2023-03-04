@@ -20,7 +20,7 @@
                 <div class="flexCenter minProfile">
                     <div class="minProfileImg">
                         {% if CURRENT_USER.profilePic %}
-                        <img src="{{ CURRENT_USER.profilePic }}" alt="CURRENT_USER.firstname">
+                        <img src="{{ CURRENT_USER.profilePic }}" alt="{{ CURRENT_USER.firstname }}">
                         {% else %}
                         <img src="{{ url_for('static', filename='img/avatar.png') }}" alt="{{ CURRENT_USER.firstname }}">
                         {% endif %}

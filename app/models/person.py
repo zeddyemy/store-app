@@ -4,6 +4,7 @@ from datetime import datetime
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.models.role import Role
+from app.models.image import Image
 
 # Define the User data model. Make sure to add flask_login UserMixin!!
 class Person(db.Model, UserMixin):
@@ -68,6 +69,28 @@ class Profile(db.Model):
     
     def __repr__(self):
         return f'<profile ID: {self.id}, name: {self.firstname}, person ID: {self.person_id}>'
+    
+    def getThumbImage(self):
+        theImage = Image.query.get(self.profilePic)
+        if theImage:
+            return theImage.get_path("thumb")
+        else:
+            return None
+    
+    def getMediumImage(self):
+        theImage = Image.query.get(self.profilePic)
+        if theImage:
+            return theImage.get_path("medium")
+        else:
+            return None
+
+    def getLargeImage(self):
+        theImage = Image.query.get(self.profilePic)
+        if theImage:
+            return theImage.get_path("large")
+        else:
+            return None
+
 
 class Address(db.Model):
     __tablename__ = "address"

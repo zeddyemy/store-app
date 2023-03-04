@@ -202,7 +202,7 @@ def getUserInfo(userId):
             'firstname': profile.firstname,
             'lastname': profile.lastname,
             'phone': profile.phone,
-            'profilePic': profile.profilePic,
+            'profilePic': profile.getMediumImage(),
             'city': address.city,
             'state': address.state,
             'country': address.country,
