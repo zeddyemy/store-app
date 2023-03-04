@@ -46,3 +46,15 @@
   .bx-lock:before {
     content: "\eb49";
   }
+  .bx-user:before {
+    content: "\ec63";
+  }
+  .bx-user-check:before {
+    content: "\ec64";
+  }
+  .bx-pen:before {
+    content: "\ebb0";
+  }
+  .bx-pencil:before {
+    content: "\ebb1";
+  }

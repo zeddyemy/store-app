@@ -27,7 +27,7 @@
 .header.expand {
 	-webkit-transition: all ease-in-out .4s;
 	-moz-transition: all ease-in-out .4s;
-	transition: all ease-in-out .4s;
+	transition: all ease-in-out .55s;
 }
 .header.expand-1x {
 	height: 120px;

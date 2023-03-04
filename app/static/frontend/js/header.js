@@ -78,7 +78,7 @@ triggerSearch.addEventListener("click", () => {
 
 /*  --------------------SCRIPT FOR THE NAVIGATION--------------------- */
 // open & close sidebar
-menuOpenBtn.addEventListener("click", () => (navLinks.style.right = "0"));
+/*menuOpenBtn.addEventListener("click", () => (navLinks.style.right = "0"));
 menuCloseBtn.addEventListener("click", () => (navLinks.style.right = "-100%"));
 
 // open & close sidebar submenu
@@ -88,13 +88,15 @@ document.addEventListener("click", function (event) {
         event.target.classList.toggle("active");
         dropdownContent.style.display = dropdownContent.style.display === "block" ? "none" : "block";
     }
-});
+});*/
 
 // When the user scrolls down, hide the navbar. When the user scrolls up, show the navbar
-let prevScrollpos = window.pageYOffset;
+const headerHeight = header.offsetHeight;
+let prevScrollPos = window.pageYOffset;
 window.addEventListener("scroll", () => {
     const currentScrollPos = window.pageYOffset;
-    document.getElementById("header").style.top = prevScrollPos > currentScrollPos ? "0" : "-100px";
-    prevScrollpos = currentScrollPos;
+    header.style.top = prevScrollPos > currentScrollPos ? "0" : "-100px";
+    header.style.background = currentScrollPos > headerHeight ? "var(--header-background-color)" : "transparent";
+    prevScrollPos = currentScrollPos;
 });
 /*  -------------------------------END---------------------------------- */

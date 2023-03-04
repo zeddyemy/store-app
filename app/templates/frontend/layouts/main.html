@@ -26,14 +26,13 @@
 </head>
 
 <body>
-    <!-- Wrap all page content here -->
-    <div class="app-body" id="wrap">
-        {% if page != 'auth' %}
-        {% include 'frontend/components/header.html' %}
-        {% endif %}
+    
+    {% if page != 'auth' %}
+    {% include 'frontend/components/header.html' %}
+    {% endif %}
         
-        <!-- Begin page content -->
-        <main id="content" role="main" class="container">
+    <!-- Begin page content -->
+    <main id="content" role="main" class="container">
             <section class="wrapper {% if form %}form-page{% endif %} {{page}}-page">
                 {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
@@ -53,8 +52,7 @@
     
                 {% block content %}{% endblock %}
             </section>
-        </main>
-    </div>
+    </main>
     
 
     <script defer type="text/javascript" src="{{ url_for('static', filename='frontend/library/flickity/flickity.min.js') }}"></script>

@@ -1,10 +1,5 @@
 /* if backdrop support: very transparent and blurred */
 @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
-    .app-body {
-        background: var(--body-background), var(--noise) !important;
-        -webkit-backdrop-filter: blur(80px);
-        backdrop-filter: blur(80px);
-    }
     .the-products {
         -webkit-backdrop-filter: blur(1px);
         backdrop-filter: blur(1px);
