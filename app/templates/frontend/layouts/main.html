@@ -53,11 +53,9 @@
         {% block content %}{% endblock %}
     </section>
     
-    <footer>
-        <section class="col-12 ft-botm">
-            <p> &copy; 2023 Gudie | All Rights Reserved </p>
-        </section>
-    </footer>
+    {% if page != 'auth' %}
+    {% include 'frontend/components/footer.html' %}
+    {% endif %}
     
 
     <script defer type="text/javascript" src="{{ url_for('static', filename='frontend/library/flickity/flickity.min.js') }}"></script>

@@ -15,8 +15,8 @@
     max-width: 630px;
     padding: 2em 2em 2em 2em;
     margin: 0em auto;
-    background-color: #fff;
-    color: black;
+    background-color: var(--box-background);
+    color: var(--body-text-color);
     border-radius: var(--rounded-post);
     box-shadow: var(--box-shadow);
 }
@@ -68,6 +68,7 @@
     border-bottom: 1px solid #e5e5e5;
     background-color: inherit;
     transition: var(--transition);
+    color: var(--body-text-color);
 }
 
 .form-wrapper .form .form-control:focus {
