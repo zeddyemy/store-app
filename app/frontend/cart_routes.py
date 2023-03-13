@@ -94,7 +94,10 @@ def cart():
         cart = Cart.query.filter_by(person_id=current_user.id).first()
 
         # Get the products in the user's cart
-        cart_products = CartProduct.query.filter_by(cart_id=cart.id).all()
+        if cart:
+            cart_products = CartProduct.query.filter_by(cart_id=cart.id).all()
+        else:
+            cart_products = []
 
         # Get the details of each product in the cart
         for cart_product in cart_products:
