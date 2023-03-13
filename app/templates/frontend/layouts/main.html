@@ -32,27 +32,32 @@
     {% endif %}
         
     <!-- Begin page content -->
-    <main id="content" role="main" class="container">
-            <section class="wrapper {% if form %}form-page{% endif %} {{page}}-page">
-                {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                {% for category, message in messages %}
-                <div class="alert-box">
-                    <div class="alert fade {{ category }}">
-                        <div class="alert-txt">
-                            {{ message }} {% if category == 'info login' %} Go to <a href="{{ url_for('ctrlPanel.login') }}"> login page</a>
-                            {% endif %}
-                        </div>
-                        <a class="close" data-dismiss="alert">&times;</a>
-                    </div>
+    <section class="wrapper {% if form %}form-page{% endif %} {{page}}-page">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert-box">
+            <div class="alert fade {{ category }}">
+                <div class="alert-txt">
+                    {{ message }} {% if category == 'info login' %} Go to <a href="{{ url_for('ctrlPanel.login') }}"> login
+                        page</a>
+                    {% endif %}
                 </div>
-                {% endfor %}
-                {% endif %}
-                {% endwith %}
+                <a class="close" data-dismiss="alert">&times;</a>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        
+        {% block content %}{% endblock %}
+    </section>
     
-                {% block content %}{% endblock %}
-            </section>
-    </main>
+    <footer>
+        <section class="col-12 ft-botm">
+            <p> &copy; 2023 Gudie | All Rights Reserved </p>
+        </section>
+    </footer>
     
 
     <script defer type="text/javascript" src="{{ url_for('static', filename='frontend/library/flickity/flickity.min.js') }}"></script>

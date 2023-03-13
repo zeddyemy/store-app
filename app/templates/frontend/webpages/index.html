@@ -18,44 +18,44 @@
 {% block content %}
 
 <section class="col-12 page-head">
-        <div class="head-container">
-            <h2 class="title">
-                Exceptional Shoes
-            </h2>
-            <span class="head-btn"><a href="#">Check</a></span>
-        </div>
+    <div class="head-container">
+        <h2 class="title">
+            Exceptional Shoes
+        </h2>
+        <span class="head-btn"><a class="btn" href="#">Check</a></span>
+    </div>
 </section>
 
 <section class="col-12 category-list">
-        <div class="secTitle">
-            <div class="theTitle">Categories</div>
-            <!-- slide buttons-->
-            <div class="slide-nav" id="cat-custom-control" aria-label="Carousel Navigation" tabindex="0"></div>
-        </div>
+    <div class="secTitle">
+        <div class="theTitle">Categories</div>
+        <!-- slide buttons-->
+        <div class="slide-nav" id="cat-custom-control" aria-label="Carousel Navigation" tabindex="0"></div>
+    </div>
     
-        <!-- The slide itself -->
-        <div class="theCategories js-flickity" id="theCategories"
-            data-flickity-options='{ "pageDots": false, "cellAlign": "left", "contain": true, "percentPosition": false, "setGallerySize": false}'>
-            {% for cat in rootCategories %}
-            <a href="/category/{{ cat.slug }}">
-                <div class="category-item card">
-                    <div class="card-img cat-img">
-                        {% if cat.cat_img %}
-                        <img class="lazyload" src="{{ url_for('static', filename='img/placeholder.png') }}" data-src="{{ cat.getMediumImage() }}" alt="" />
-                        {% else %}
-                        <img src="{{ url_for('static', filename='img/placeholder.png') }}" alt="">
-                        {% endif %}
-                    </div>
-                    <div class="card-text">
-                        <div class="cat-title">{{ cat.name }}</div>
-                    </div>
+    <!-- The slide itself -->
+    <div class="theCategories js-flickity" id="theCategories" 
+        data-flickity-options='{ "pageDots": false, "cellAlign": "left", "contain": true, "percentPosition": false, "setGallerySize": false}'>
+        {% for cat in rootCategories %}
+        <a href="/category/{{ cat.slug }}">
+            <div class="category-item card">
+                <div class="card-img cat-img">
+                    {% if cat.cat_img %}
+                    <img class="lazyload" src="{{ url_for('static', filename='img/placeholder.png') }}" data-src="{{ cat.getMediumImage() }}" alt="" />
+                    {% else %}
+                    <img src="{{ url_for('static', filename='img/placeholder.png') }}" alt="">
+                    {% endif %}
                 </div>
-            </a>
-            {% endfor %}
-        </div>
+                <div class="card-text">
+                    <div class="cat-title">{{ cat.name }}</div>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
 </section>
 
-<section class="col-12 all-products">
+<main id="content" role="main" class="col-12 all-products">
         <div class="secTitle">
             <div class="theTitle">Latest</div>
         </div>
@@ -92,6 +92,6 @@
             <a href="{{url_for('frontend.allProducts', page=allProducts.next_num)}}"
                 class="page-numbers {% if not allProducts.has_next %}disabled{% endif %}"> &raquo; </a>
         </div>
-</section>
+</main>
 
 {% endblock %}

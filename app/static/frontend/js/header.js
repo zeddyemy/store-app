@@ -91,12 +91,30 @@ document.addEventListener("click", function (event) {
 });*/
 
 // When the user scrolls down, hide the navbar. When the user scrolls up, show the navbar
-const headerHeight = header.offsetHeight;
-let prevScrollPos = window.pageYOffset;
-window.addEventListener("scroll", () => {
-    const currentScrollPos = window.pageYOffset;
-    header.style.top = prevScrollPos > currentScrollPos ? "0" : "-100px";
-    header.style.background = currentScrollPos > headerHeight ? "var(--header-background-color)" : "transparent";
-    prevScrollPos = currentScrollPos;
+let lastScrollPos = 0;
+const SCROLL_THRESHOLD = 35;
+let isScrolling = false;
+
+window.addEventListener("scroll", function () {
+    const currentScrollPos = window.pageYOffset || document.documentElement.scrollTop;
+    const headerHeight = header.getBoundingClientRect().height;
+
+    // Check if the user has scrolled far enough
+    if (Math.abs(lastScrollPos - currentScrollPos) <= SCROLL_THRESHOLD) {
+        return;
+    }
+
+    // Throttle the scroll event
+    if (!isScrolling) {
+        window.requestAnimationFrame(function () {
+            header.classList[(currentScrollPos > lastScrollPos) && (lastScrollPos > 0) ? 'add' : 'remove']('hide');
+            header.style.background = currentScrollPos > headerHeight ? "var(--header-bg-color)" : "transparent";
+            
+            // Store the current scroll position
+            lastScrollPos = currentScrollPos;
+            isScrolling = false;
+        });
+    }
+    isScrolling = true;
 });
 /*  -------------------------------END---------------------------------- */
