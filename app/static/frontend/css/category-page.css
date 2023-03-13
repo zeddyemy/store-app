@@ -2,7 +2,6 @@
     height: 55vh !important;
 }
 .category-head {
-    background-image: url(../img/home-10.jpg);
     height: 45vh;
     border-radius: 0px 0px 30px 30px;
     box-shadow: var(--box-shadow);
@@ -16,6 +15,14 @@
 .cat-head-container .title {
     margin: 0px 0px 0px 0px;
     word-spacing: 0;
+}
+
+.cat-page-tab {
+    display: block;
+    position: relative;
+    padding: 40px var(--site-pad);
+    padding-bottom: 50px;
+    transition: .8s;
 }
 .theTabs {
     height: 36px;

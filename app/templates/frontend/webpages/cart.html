@@ -36,10 +36,10 @@
 
                             <div class="cart-quantity">
                                 <div class="cartAddItem">
-                                    <button class="cartBtn cartMinus" onclick="decrement()">-</button>
+                                    <button class="cartBtn cartMinus">-</button>
                                     <input class="theQuantity" type="number" id="" name="quantity" min="1" max="5"
                                         value="{{ quantity }}">
-                                    <button class="cartBtn cartPlus" onclick="increment()">+</button>
+                                    <button class="cartBtn cartPlus">+</button>
                                 </div>
                             </div>
                         </div>
@@ -76,14 +76,6 @@
     </section>
 </section>
 
-<script>
-    function increment() {
-        document.getElementById('demoInput').stepUp();
-    }
-
-    function decrement() {
-        document.getElementById('demoInput').stepDown();
-    }
-</script>
+<script async type="text/javascript" src="{{ url_for('static', filename='frontend/js/cart.js') }}"></script>
 
 {% endblock %}

@@ -8,8 +8,7 @@
     <title>{% block title %}{% endblock %}</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='library/boxicons/css/only.used.boxicons.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='frontend/css/index.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='frontend/css/responsive.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='frontend/css/main.css') }}">
     
     {% block cssLinks %}{% endblock %}
     
@@ -60,13 +59,10 @@
 
     <script defer type="text/javascript" src="{{ url_for('static', filename='frontend/library/flickity/flickity.min.js') }}"></script>
     <script defer type="text/javascript" src="{{ url_for('static', filename='frontend/library/flickity/flickity-addons.js') }}"></script>
-    <script async type="text/javascript" src="{{ url_for('static', filename='library/lazysizes/lazysizes.min.js') }}"></script>
+    <script defer type="text/javascript" src="{{ url_for('static', filename='library/lazysizes/lazysizes.min.js') }}"></script>
     <script defer type="text/javascript" src="{{ url_for('static', filename='frontend/js/darkmode.js') }}"></script>
 
-    {% if page == 'cart' %}
-    <script async type="text/javascript" src="{{ url_for('static', filename='frontend/js/cart.js') }}"></script>
-    {% endif %}
-
+    
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     <script src="{{ url_for('static', filename='frontend/js/alert.js') }}"></script>
