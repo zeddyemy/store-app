@@ -81,6 +81,15 @@ def addToCart(product_id):
         return resp
 
 
+@bp.route('/pro-duct/<int:product_id>', methods=['POST'])
+def productInfo(product_id):
+    error = False
+    
+    product = Product.query.filter(Product.id == product_id).first()
+    productDetails = product.format()
+    
+    return jsonify(productDetails)
+
 # Cart page
 @bp.route("/cart")
 # @frontendLogin_required

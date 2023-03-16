@@ -21,7 +21,7 @@
         grid-template-columns: repeat(3, 1fr);
     }
 }
-@media screen and (min-width: 760px) {
+@media screen and (min-width: 768px) {
     .all-products-wrapper {
         grid-template-columns: repeat(4, 1fr);
     }
@@ -76,7 +76,7 @@
     font-weight: 600;
     color: var(--body-text-color);
     box-shadow: var(--box-shadow);
-    background-color: var(--box-background);
+    background-color: var(--box-bg-clear);
 }
 .page-numbers.current,
 a.page-numbers:hover {
@@ -90,4 +90,81 @@ a.page-numbers:hover {
     opacity: 0.6;
     cursor: none;
     pointer-events: none;
+}
+
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6);
+    overflow: hidden;
+}
+.modal-content {
+    position: relative;
+    margin: auto;
+    margin-bottom: 0px;
+    width: 100%;
+    background-color: var(--box-bg);
+    color: var(--body-text-color);
+    padding: 30px 20px 20px;
+    border: 1px solid var(--outline);
+    border-radius: 30px 30px 0px 0px;
+    transition: width .4s;
+}
+@media screen and (min-width: 640px) {
+    .modal-content {
+        width: 80%;
+        border-radius: var(--rounded-post);
+        margin: auto;
+        margin-bottom: auto;
+    }
+}
+.modal-content::before,
+.modalBar {
+    border: 2px solid;
+    width: 30px;
+    display: block;
+    border-radius: 20px;
+    position: absolute;
+    top: 9px;
+    right: calc(50% - 30px);
+}
+.modal-content::before{
+    border: 5px solid;
+}
+.modal-content .title {
+    margin-bottom: 20px;
+    position: relative;
+    font-size: inherit;
+    font-family: var(--font-two);
+}
+.closeModal {
+    position: absolute;
+    right: 5px;
+    font-weight: bold;
+    color: var(--body-text-color);
+    transform: scale(1.6);
+    z-index: 1;
+}
+.closeModal:hover,
+.closeModal:focus {
+    color: var(--body-text-color-hover);
+    text-decoration: none;
+    cursor: pointer;
+}
+/* Animation */
+.modal-content {
+    animation-name: slide-in-bottom;
+    animation-duration: 0.5s;
+}
+@keyframes slide-in-bottom {
+    from { bottom: -300px; opacity: 0 }
+    to { bottom: 0; opacity: 1 }
 }

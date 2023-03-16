@@ -1,95 +1,130 @@
 {% if allProducts %}
-{% if allProducts.items %}
-<article class="all-products-wrapper" id="all-products-wrapper">
-        {% for product in allProducts.items %}
-        <article class="the-products card {{ product.category_id }}">
-            <a href="/product/{{ product.slug }}">
-                <div class="card-img product-img">
-                    {% if product.product_img %}
-                    <img src="{{ product.getMediumImage() }}" alt="">
-                    {% else %}
-                    <img src="{{ url_for('static', filename='frontend/img/placeholder.png') }}" alt="">
-                    {% endif %}
-                </div>
-            </a>
-            <div class="card-text">
+    {% if allProducts.items %}
+    <article class="all-products-wrapper" id="all-products-wrapper">
+            {% for product in allProducts.items %}
+            <article class="the-products card {{ product.category_id }}">
                 <a href="/product/{{ product.slug }}">
-                    <h2 class="product-title">{{ product.name }}</h2>
+                    <div class="card-img product-img">
+                        {% if product.product_img %}
+                        <img src="{{ product.getMediumImage() }}" alt="">
+                        {% else %}
+                        <img src="{{ url_for('static', filename='frontend/img/placeholder.png') }}" alt="">
+                        {% endif %}
+                    </div>
                 </a>
-                <span class="product-price">{{ product.sellingPrice }}</span>
-                <span class="btn add-to-cart" id="" data-product_id="{{ product.id }}">+</span>
-            </div>
-        </article>
-        {% endfor %}
-</article>
-
-<div class="pagination">
-    <a href="{{url_for('frontend.allProducts', page=allProducts.prev_num)}}"
-        class="page-numbers {% if not allProducts.has_prev %}disabled{% endif %}"> &laquo; </a>
-    {% for page in allProducts.iter_pages() %}
-    <a href="{{ url_for('frontend.allProducts', page=page) }}"
-        class="page-numbers {% if page == allProducts.page %}current{% endif %}">{{ page }}</a>
-    {% endfor %}
-    <a href="{{url_for('frontend.allProducts', page=allProducts.next_num)}}"
-        class="page-numbers {% if not allProducts.has_next %}disabled{% endif %}"> &raquo; </a>
-</div>
-{% else %}
-<article class="all-products-wrapper" id="all-products-wrapper">
-    <article class="the-products card no-products">
-        <p> Oops! There are no Products in this category </p>
+                <div class="card-text">
+                    <a href="/product/{{ product.slug }}">
+                        <h2 class="product-title">{{ product.name }}</h2>
+                    </a>
+                    <span class="product-price">{{ product.sellingPrice }}</span>
+                    <span class="btn plusCart" id="" data-product_id="{{ product.id }}" data-sizes="{{ product.sizes }}" data-colors="{{ product.colors }}">+</span>
+                </div>
+            </article>
+            {% endfor %}
     </article>
-</article>
-{% endif %}
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="closeModal" id="closeModal">&times;</span>
+            <h3 class="title">Select options for product</h3>
+            <!-- add your product options here -->
+        </div>
+    </div>
+
+    {% else %}
+    <article class="all-products-wrapper" id="all-products-wrapper">
+        <article class="the-products card no-products">
+            <p> Oops! There are no Products in this category </p>
+        </article>
+    </article>
+    {% endif %}
 {% endif %}
 
 <script>
-    const addToCartBtns = document.querySelectorAll('.add-to-cart');
+    const plusCartBtns = document.querySelectorAll('.plusCart');
+    let modal = document.getElementById("myModal");
 
-    addToCartBtns.forEach(function (addBtn) {
+    plusCartBtns.forEach(function (addBtn) {
         addBtn.addEventListener('click', function (e) {
             e.preventDefault();
             const productId = this.dataset.product_id;
-            const url = '/add-to-cart/' + productId;
-
-            console.log('Add-to-cart button Clicked', e);
-            console.log('productId ----->>>>', productId);
-
-            // Send a POST request to the server to add the product to the cart
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({}), // empty JSON object
-                credentials: 'include'
-            })
-                .then(function (response) {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(function (jsonResponse) {
-                    console.log(jsonResponse)
-                    const success = jsonResponse['success'];
-                    const cartCount = document.querySelector('.cart-count');
-                    let count = 0;
-                    // Update the cart count display
-                    if (success === true) {
-                        console.log('Product added to cart');
-                        const count = jsonResponse['cart_count'];
-                        cartCount.textContent = count;
-                    } else {
-                        console.error('Error adding product to cart');
-                        alert('Error adding product to cart.');
-                        cartCount.textContent = 0;
-                    }
-                })
-                .catch(function (error) {
-                    console.error('There was a problem with the fetch operation:', error);
-                    cartCount.textContent = -0;
-                    throw error;
-                });
+            const productSizes = this.dataset.sizes;
+            const productColors = this.dataset.colors;
+            console.log('productId ==>', productId, '\n', 'productSizes ==>', productSizes, '\n', 'productColors ==>', productColors, '\n');
+            updateModal(productId, productSizes, productColors);
         });
     });
+
+    function updateModal(productId, productSizes, productColors) {
+            let modalContent = modal.querySelector('.modal-content');
+
+            // Split the sizes string into an array
+            let sizes = productSizes.split(',').map(size => size.trim());
+            let colors = productColors.split(',').map(color => color.trim());
+            // Create a string of HTML for the radio buttons using the sizes and colors
+            let sizesHtml = sizes.map(size => {
+                return `
+                    <label> 
+                        <input type="radio" name="size" value="${size}">
+                        <span>${size}</span>
+                    </label>
+                `;
+            }).join('');
+
+
+            let colorsHtml = colors.map(color => {
+                return `
+                    <label>
+                        <input type="radio" name="color" value="${color}">
+                        <span style="background-color: ${color}"></span>
+                    </label>
+                `;
+            }).join('');
+
+
+            // Update the modal HTML structure with the necessary product options
+            // For example, you could add the product name, price, and a dropdown for selecting the size
+            modalContent.innerHTML = `
+                <span class="modalBar"></span>
+                <div class="title">
+                    <span class="closeModal" id="closeModal">&times;</span>
+                    <h3 class="title">Please Select a variation</h3>
+                </div>
+                
+                <div class="productOptions">
+                    ${productSizes !== '' ? `
+                        <div class="sizeOptions">
+                            <span class="SizeTitle">Size</span>
+                            <div class="theSizeOptions">
+                                ${sizesHtml}
+                            </div>
+                        </div>
+                    ` : ''}
+                    ${productColors !== '' ? `
+                        <div class="colorOptions">
+                            <span class="colorTitle">Color</span>
+                            <div class="theColorOptions">
+                                ${colorsHtml}
+                            </div>
+                        </div>
+                    ` : ''}
+                <div>
+                <button class="btn">Add to cart</button>
+        `;
+        
+        toggleModal();
+    }
+
+    function toggleModal() {
+        let closeModal = modal.querySelector('.closeModal');
+        
+        window.addEventListener('click', event => {
+            if (event.target == modal || event.target == closeModal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        modal.style.display = 'flex';
+    }
+
 </script>

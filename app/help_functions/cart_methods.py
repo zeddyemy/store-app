@@ -5,6 +5,7 @@ from flask_login import current_user
 
 from app.extensions import db
 from app.models.cart import Cart, CartProduct
+from app.models.product import Product
 
 def clear_cart_cookie():
     response = make_response('')
@@ -49,3 +50,4 @@ def getCartCount(userId=''):
             cart_count = sum([item['quantity'] for item in cartItems])
     
     return cart_count
+

@@ -46,6 +46,17 @@
             {% endif %}
 
             {% include 'frontend/components/all-products.html' %}
+
+            <div class="pagination" id="pagination">
+                <a href="{{url_for('frontend.showCatProducts', slug=category.slug, page=allProducts.prev_num)}}"
+                    class="page-numbers {% if not allProducts.has_prev %}disabled{% endif %}"> &laquo; </a>
+                {% for page in allProducts.iter_pages() %}
+                <a href="{{ url_for('frontend.showCatProducts', slug=category.slug, page=page) }}"
+                    class="page-numbers {% if page == allProducts.page %}current{% endif %}">{{ page }}</a>
+                {% endfor %}
+                <a href="{{url_for('frontend.showCatProducts', slug=category.slug, page=allProducts.next_num)}}"
+                    class="page-numbers {% if not allProducts.has_next %}disabled{% endif %}"> &raquo; </a>
+            </div>
             
         </section>
 </section>

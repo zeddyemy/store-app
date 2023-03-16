@@ -15,11 +15,8 @@ function setActiveTab(tabItem) {
 }
 
 function renderProductCard(product) {
-    const liItem = document.createElement('article');
-    liItem.classList = 'the-products card';
-
-    const content = `
-    <article class="the-products card 3">
+    const liItem = `
+    <article class="the-products card ${product.category_id}">
         <a href="/product/${product.slug}">
             <div class="card-img product-img">
                 <img src="${product.product_img}" alt="">
@@ -30,10 +27,10 @@ function renderProductCard(product) {
                 <h2 class="product-title">${product.name}</h2>
             </a>
             <span class="product-price">${product.sellingPrice}</span>
+            <span class="btn add-to-cart" id="" data-product_id="${product.id}">+</span>
         </div>
     </article>
     `;
-    liItem.innerHTML = content;
     return liItem;
 }
 
@@ -71,7 +68,7 @@ function renderProducts(jsonResponse) {
     } else {
         products.forEach((product) => {
             const liItem = renderProductCard(product);
-            list.appendChild(liItem);
+            list.innerHTML += liItem;
         });
 
         const paginationLinks = generatePaginationLinks(iter_pages, currentPage, activeTabSlug);

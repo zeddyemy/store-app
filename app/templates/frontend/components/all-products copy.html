@@ -1,0 +1,93 @@
+{% if allProducts %}
+    {% if allProducts.items %}
+    <article class="all-products-wrapper" id="all-products-wrapper">
+            {% for product in allProducts.items %}
+            <article class="the-products card {{ product.category_id }}">
+                <a href="/product/{{ product.slug }}">
+                    <div class="card-img product-img">
+                        {% if product.product_img %}
+                        <img src="{{ product.getMediumImage() }}" alt="">
+                        {% else %}
+                        <img src="{{ url_for('static', filename='frontend/img/placeholder.png') }}" alt="">
+                        {% endif %}
+                    </div>
+                </a>
+                <div class="card-text">
+                    <a href="/product/{{ product.slug }}">
+                        <h2 class="product-title">{{ product.name }}</h2>
+                    </a>
+                    <span class="product-price">{{ product.sellingPrice }}</span>
+                    <span class="btn plusCart" id="" data-product_id="{{ product.id }}">+</span>
+                </div>
+            </article>
+            {% endfor %}
+    </article>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Select options for product</h3>
+            <!-- add your product options here -->
+        </div>
+    </div>
+
+    {% else %}
+    <article class="all-products-wrapper" id="all-products-wrapper">
+        <article class="the-products card no-products">
+            <p> Oops! There are no Products in this category </p>
+        </article>
+    </article>
+    {% endif %}
+{% endif %}
+
+<script>
+    const addToCartBtns = document.querySelectorAll('.plusCart');
+
+    addToCartBtns.forEach(function (addBtn) {
+        addBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            const productId = this.dataset.product_id;
+            const url = '/add-to-cart/' + productId;
+
+            console.log('Add-to-cart button Clicked', e);
+            console.log('productId ----->>>>', productId);
+
+            // Send a POST request to the server to add the product to the cart
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({}), // empty JSON object
+                credentials: 'include'
+            })
+                .then(function (response) {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(function (jsonResponse) {
+                    console.log(jsonResponse)
+                    const success = jsonResponse['success'];
+                    const cartCount = document.querySelector('.cart-count');
+                    let count = 0;
+                    // Update the cart count display
+                    if (success === true) {
+                        console.log('Product added to cart');
+                        const count = jsonResponse['cart_count'];
+                        cartCount.textContent = count;
+                    } else {
+                        console.error('Error adding product to cart');
+                        alert('Error adding product to cart.');
+                        cartCount.textContent = 0;
+                    }
+                })
+                .catch(function (error) {
+                    console.error('There was a problem with the fetch operation:', error);
+                    cartCount.textContent = -0;
+                    throw error;
+                });
+        });
+    });
+</script>

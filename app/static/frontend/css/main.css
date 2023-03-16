@@ -89,7 +89,9 @@
 body {
     --body-background: -webkit-linear-gradient(150deg, #e3e8e7d0, #ffffff91, #d6d6d6a9);
     --body-text-color: #000;
-    --box-background: rgba(248,248,248,0.5);
+    --body-text-color-hover: #3c3c3c;
+    --box-bg: rgba(248, 248, 248);
+    --box-bg-clear: rgba(247, 247, 247, 0.6);
     --box-shadow: 0.05rem 0.1rem 0.3rem -0.03rem rgb(0 0 0 / 45%);
     --brightness: brightness(100%) contrast(1);
     --outline: rgba(52, 56, 56, 0.3);
@@ -98,7 +100,9 @@ body {
 body.dark-theme {
     --body-background: -webkit-linear-gradient(150deg, #252525d0, #000000c2, #1c1c1e);
     --body-text-color: #e9e9e9;
-    --box-background: rgba(33, 33, 34, 0.7);
+    --body-text-color-hover: #7c7c7c;
+    --box-bg: rgba(33, 33, 34);
+    --box-bg-clear: rgba(33, 33, 34, 0.7);
     --brightness: brightness(75%) contrast(1.1);
     --outline: rgba(189, 192, 192, 0.5);
     --body-opacity: 0.15
@@ -108,7 +112,9 @@ body.dark-theme {
     body {
         --body-background: -webkit-linear-gradient(150deg, #252525d0, #000000c2, #1c1c1e);
         --body-text-color: #e9e9e9;
-        --box-background: rgba(33, 33, 34, 0.7);
+        --body-text-color-hover: #7c7c7c;
+        --box-bg: rgba(33, 33, 34);
+        --box-bg-clear: rgba(33, 33, 34, 0.7);
         --brightness: brightness(75%) contrast(1.1);
         --outline: rgba(189, 192, 192, 0.5);
         --body-opacity: 0.15
@@ -117,7 +123,9 @@ body.dark-theme {
     body.light-theme {
         --body-background: -webkit-linear-gradient(150deg, #e3e8e7d0, #ffffff91, #d6d6d6a9);
         --body-text-color: #000;
-        --box-background: rgba(248,248,248,0.5);
+        --body-text-color-hover: #3c3c3c;
+        --box-bg: rgba(248, 248, 248);
+        --box-bg-clear: rgba(247, 247, 247, 0.6);
         --brightness: brightness(100%) contrast(1);
         --outline: rgba(52, 56, 56, 0.3);
         --body-opacity: 0.3
@@ -202,6 +210,9 @@ a {
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
 }
+a.btn {
+    line-height: var(--btn-height);
+}
 .btn {
     --btn-height: 40px;
     position: relative;
@@ -209,13 +220,12 @@ a {
     display: block;
     min-width: 100%;
     height: var(--btn-height);
-    line-height: var(--btn-height);
     color: #fff;
     font-weight: bold;
     font-family: var(--font-two);
     outline: none;
     border: none;
-    border-radius: var(--rounded-post);
+    border-radius: var(--btn-height);
     background: var(--theme-color);
     box-shadow: var(--box-shadow);
     transition: all 0.3s ease;
@@ -224,7 +234,7 @@ a {
 .btn:active {
     transform: scale(0.95);
 }
-.add-to-cart {
+.plusCart {
     --btn-cart: 25px;
     min-width: var(--btn-cart);
     width: var(--btn-cart);
@@ -245,7 +255,7 @@ a {
     -moz-box-shadow: var(--box-shadow);
     -webkit-box-shadow: var(--box-shadow);
     box-shadow: var(--box-shadow);
-    background-color: var(--box-background);
+    background-color: var(--box-bg-clear);
     text-align: left;
     color: var(--body-text-color);
     position: relative;
@@ -267,6 +277,9 @@ a {
     height: 100%;
     overflow: hidden;
     display: block;
+}
+.card-img img:hover {
+    transform: scale(1.1);
 }
 .card-text {
     -moz-osx-font-smoothing: grayscale;
@@ -369,6 +382,7 @@ a {
     font-size: 15px;
     min-width: unset !important;
     --btn-height: 35px;
+    line-height: var(--btn-height);
     margin: 2px auto;
     padding: 0px 30px;
     display: inline-block;

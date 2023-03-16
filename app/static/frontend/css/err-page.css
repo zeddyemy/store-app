@@ -13,7 +13,8 @@
     margin: 0 auto;
     border-radius: 20px;
     box-shadow: var(--box-shadow);
-    background: beige;
+    background: var(--box-bg);
+    color: var(--body-text-color);
 }
 @media screen and (min-width: 730px) {
     .errorStatus {

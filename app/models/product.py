@@ -70,4 +70,5 @@ class Product(db.Model):
             'colors': self.colors,
             'product_img': self.getMediumImage(),
             'slug': self.slug,
+            'category_id': self.category_id
             }
