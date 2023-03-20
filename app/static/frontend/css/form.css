@@ -15,7 +15,7 @@
     max-width: 630px;
     padding: 2em 2em 2em 2em;
     margin: 0em auto;
-    background-color: var(--box-background);
+    background-color: var(--box-bg-clear);
     color: var(--body-text-color);
     border-radius: var(--rounded-post);
     box-shadow: var(--box-shadow);

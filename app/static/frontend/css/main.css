@@ -230,6 +230,7 @@ a.btn {
     box-shadow: var(--box-shadow);
     transition: all 0.3s ease;
     text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
 }
 .btn:active {
     transform: scale(0.95);

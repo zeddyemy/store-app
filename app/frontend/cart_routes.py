@@ -24,6 +24,11 @@ def addToCart(product_id):
             return jsonify({'success': False})
         
         quantity = int(request.form.get('quantity', 1))
+        
+        data = request.get_json()
+        size = data.get('size')
+        color = data.get('color')
+        quantity = data.get('quantity', 1)
     
         # Check if user is logged in
         if current_user.is_authenticated:
@@ -34,11 +39,11 @@ def addToCart(product_id):
                 db.session.add(cart)
                 db.session.commit()
             
-            cart_product = CartProduct.query.filter_by(cart_id=cart.id, product_id=product.id).first()
+            cart_product = CartProduct.query.filter_by(cart_id=cart.id, product_id=product.id, size=size, color=color).first()
             if cart_product:
                 cart_product.quantity += quantity
             else:
-                cart_product = CartProduct(cart_id=cart.id, product_id=product.id, quantity=quantity)
+                cart_product = CartProduct(cart_id=cart.id, product_id=product.id, size=size, color=color, quantity=quantity)
                 db.session.add(cart_product)
             
             db.session.commit()
@@ -55,13 +60,13 @@ def addToCart(product_id):
             
             updated_cart_items = False
             for item in cart_items:
-                if item['product_id'] == product_id:
+                if item['product_id'] == product_id and item['size'] == size and item['color'] == color:
                     item['quantity'] += quantity
                     updated_cart_items = True
                     break
             
             if not updated_cart_items:
-                cart_items.append({'product_id': product_id, 'quantity': quantity})
+                cart_items.append({'product_id': product_id, 'size': size, 'color': color, 'quantity': quantity})
             
             cart_count = sum(item['quantity'] for item in cart_items)
             resp_data = {'success': True, 'cart_count': cart_count}

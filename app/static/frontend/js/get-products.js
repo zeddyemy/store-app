@@ -27,7 +27,7 @@ function renderProductCard(product) {
                 <h2 class="product-title">${product.name}</h2>
             </a>
             <span class="product-price">${product.sellingPrice}</span>
-            <span class="btn add-to-cart" id="" data-product_id="${product.id}">+</span>
+            <span class="btn plusCart" id="" data-product_id="${product.id}" data-sizes="${product.sizes}" data-colors="${product.colors}">+</span>
         </div>
     </article>
     `;

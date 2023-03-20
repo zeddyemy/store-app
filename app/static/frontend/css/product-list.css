@@ -126,18 +126,12 @@ a.page-numbers:hover {
         margin-bottom: auto;
     }
 }
-.modal-content::before,
 .modalBar {
     border: 2px solid;
     width: 30px;
     display: block;
     border-radius: 20px;
-    position: absolute;
-    top: 9px;
-    right: calc(50% - 30px);
-}
-.modal-content::before{
-    border: 5px solid;
+    margin: -15px auto 15px;
 }
 .modal-content .title {
     margin-bottom: 20px;

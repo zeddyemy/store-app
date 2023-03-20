@@ -56,23 +56,22 @@
     });
 
     function updateModal(productId, productSizes, productColors) {
-            let modalContent = modal.querySelector('.modal-content');
+        let modalContent = modal.querySelector('.modal-content');
 
-            // Split the sizes string into an array
-            let sizes = productSizes.split(',').map(size => size.trim());
-            let colors = productColors.split(',').map(color => color.trim());
-            // Create a string of HTML for the radio buttons using the sizes and colors
-            let sizesHtml = sizes.map(size => {
-                return `
-                    <label> 
-                        <input type="radio" name="size" value="${size}">
-                        <span>${size}</span>
-                    </label>
-                `;
-            }).join('');
+        // Split the sizes string into an array
+        let sizes = productSizes.split(',').map(size => size.trim());
+        let colors = productColors.split(',').map(color => color.trim());
+        // Create a string of HTML for the radio buttons using the sizes and colors
+        let sizesHtml = sizes.map(size => {
+            return `
+                <label> 
+                    <input type="radio" name="size" value="${size}">
+                    <span>${size}</span>
+                </label>
+            `;
+        }).join('');
 
-
-            let colorsHtml = colors.map(color => {
+        let colorsHtml = colors.map(color => {
                 return `
                     <label>
                         <input type="radio" name="color" value="${color}">
@@ -82,37 +81,112 @@
             }).join('');
 
 
-            // Update the modal HTML structure with the necessary product options
-            // For example, you could add the product name, price, and a dropdown for selecting the size
-            modalContent.innerHTML = `
-                <span class="modalBar"></span>
-                <div class="title">
-                    <span class="closeModal" id="closeModal">&times;</span>
-                    <h3 class="title">Please Select a variation</h3>
-                </div>
-                
-                <div class="productOptions">
-                    ${productSizes !== '' ? `
-                        <div class="sizeOptions">
-                            <span class="SizeTitle">Size</span>
-                            <div class="theSizeOptions">
-                                ${sizesHtml}
-                            </div>
+        // Update the modal HTML structure with the necessary product options
+        // For example, you could add the product name, price, and a dropdown for selecting the size
+        modalContent.innerHTML = `
+            <span class="modalBar"></span>
+            <div class="title">
+                <span class="closeModal" id="closeModal">&times;</span>
+                <h3 class="title">Please Select a variation</h3>
+            </div>
+            
+            <div class="productOptions">
+                ${productSizes !== '' ? `
+                    <div class="sizeOptions">
+                        <span class="SizeTitle">Size</span>
+                        <div class="theSizeOptions">
+                            ${sizesHtml}
                         </div>
-                    ` : ''}
-                    ${productColors !== '' ? `
+                    </div>
+                ` : ''}
+                ${productColors !== '' ? `
                         <div class="colorOptions">
                             <span class="colorTitle">Color</span>
                             <div class="theColorOptions">
                                 ${colorsHtml}
                             </div>
                         </div>
-                    ` : ''}
-                <div>
-                <button class="btn">Add to cart</button>
-        `;
+                ` : ''}
+                <div class="cart-quantity">
+                    <div class="cartAddItem">
+                        <button class="cartBtn cartMinus">-</button>
+                        <input class="theQuantity" type="number" id="" name="quantity" min="1" max="5" value="1">
+                        <button class="cartBtn cartPlus">+</button>
+                    </div>
+                </div>
+            <div>
+            <button class="btn addToCart">Add to cart</button>
+            `;
         
         toggleModal();
+
+        let addToCartBtn = modalContent.querySelector('.addToCart');
+        addToCartBtn.addEventListener('click', function () {
+            let sizeRadioBtns = modalContent.querySelectorAll('input[name=size]');
+            let colorRadioBtns = modalContent.querySelectorAll('input[name=color]');
+            let selectedSize = '';
+            let selectedColor = '';
+            const url = '/add-to-cart/' + productId;
+
+            // Get the selected size
+            sizeRadioBtns.forEach(function (radioBtn) {
+                if (radioBtn.checked) {
+                    selectedSize = radioBtn.value;
+                }
+            });
+
+            // Get the selected color
+            colorRadioBtns.forEach(function (radioBtn) {
+                if (radioBtn.checked) {
+                    selectedColor = radioBtn.value;
+                }
+            });
+
+            // Retrieve quantity from input field
+            let quantityInput = modalContent.querySelector('.theQuantity');
+            let quantity = quantityInput.value;
+
+            // Send an AJAX request to the Flask route
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    productId: productId,
+                    size: selectedSize,
+                    color: selectedColor,
+                    quantity: quantity
+                })
+            })
+                .then(function (response) {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(function (jsonResponse) {
+                    console.log(jsonResponse)
+                    const success = jsonResponse['success'];
+                    const cartCount = document.querySelector('.cart-count');
+                    let count = 0;
+                    // Update the cart count display
+                    if (success === true) {
+                        console.log('Product added to cart');
+                        const count = jsonResponse['cart_count'];
+                        cartCount.textContent = count;
+                    } else {
+                        console.error('Error adding product to cart');
+                        alert('Error adding product to cart.');
+                        cartCount.textContent = 0;
+                    }
+                })
+                .catch(function (error) {
+                    console.error('There was a problem with the fetch operation:', error);
+                    cartCount.textContent = -0;
+                    throw error;
+                });
+        });
     }
 
     function toggleModal() {
@@ -128,3 +202,7 @@
     }
 
 </script>
+
+<!--
+    'You'll need to add an event listener to the "Add to cart" button inside the modal, and then retrieve the selected size and color (if applicable) from the radio buttons.'
+-->

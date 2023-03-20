@@ -70,7 +70,7 @@
     bottom: 0;
     z-index: 10;
     align-items: unset;
-    background: var(--box-background);
+    background: var(--box-bg-clear);
     backdrop-filter: blur(3px);
 }
 .boxLoading img {

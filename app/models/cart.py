@@ -22,5 +22,7 @@ class CartProduct(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     cart_id = db.Column(db.Integer, db.ForeignKey('cart.id'))
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
+    size = db.Column(db.String(20))
+    color = db.Column(db.String(20))
     quantity = db.Column(db.Integer, default=1)
     product = db.relationship('Product', backref=db.backref('cart_products', lazy=True))

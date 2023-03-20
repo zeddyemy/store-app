@@ -50,7 +50,7 @@ a.errBtn {
     padding: 7px 20px;
     border-radius: 20px;
     border: 1px solid var(--outline);
-    background-color: var(--box-background);
+    background-color: var(--box-bg-clear);
     font-size: 15px;
     color: var(--body-text-color);
     text-decoration: none;
