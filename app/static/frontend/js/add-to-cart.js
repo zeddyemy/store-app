@@ -185,7 +185,6 @@ addToCartBtn.addEventListener('click', () => {
             }
         })
         .catch((error) => {
-            toggleLoading();
             msg = 'Error adding product to cart. Please try again. <br> if error persist, please contact the site owner';
             status = 'error';
             toggleAlert(msg, status)
