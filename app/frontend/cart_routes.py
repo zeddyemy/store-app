@@ -1,13 +1,12 @@
 import sys
 import json
-from flask import render_template, request, Response, flash, redirect, url_for, jsonify, make_response, abort
+from flask import render_template, request, Response, flash, jsonify
 from flask_login import login_user, current_user
 from app.frontend import bp
 from app.extensions import db
 from app.models.product import Product
 from app.models.cart import Cart, CartProduct
 from app.models.person import Person
-from app.appfunctions import getAllProducts, get_or_404
 from app.decorators import frontendLogin_required
 
 # Add to Cart
@@ -23,13 +22,11 @@ def addToCart(product_id):
             # handle case where product doesn't exist
             return jsonify({'success': False})
         
-        quantity = int(request.form.get('quantity', 1))
-        
         data = request.get_json()
         size = data.get('size')
         color = data.get('color')
-        quantity = data.get('quantity', 1)
-    
+        quantity = int(data.get('quantity', 1))
+        
         # Check if user is logged in
         if current_user.is_authenticated:
             # Add the product to the user's cart
@@ -52,55 +49,45 @@ def addToCart(product_id):
             resp = jsonify(resp_data)
         else:
             # Add the product to the cart stored in the cookie
-            cart_items = request.cookies.get('cart_items')
-            if cart_items:
-                cart_items = json.loads(cart_items)
+            getCartItems = request.cookies.get('cart_items')
+            if getCartItems:
+                cartItems = json.loads(getCartItems)
             else:
-                cart_items = []
+                cartItems = []
             
             updated_cart_items = False
-            for item in cart_items:
+            for item in cartItems:
                 if item['product_id'] == product_id and item['size'] == size and item['color'] == color:
                     item['quantity'] += quantity
                     updated_cart_items = True
                     break
             
             if not updated_cart_items:
-                cart_items.append({'product_id': product_id, 'size': size, 'color': color, 'quantity': quantity})
+                cartItems.append({'product_id': product_id, 'size': size, 'color': color, 'quantity': quantity})
             
-            cart_count = sum(item['quantity'] for item in cart_items)
+            cart_count = sum(item['quantity'] for item in cartItems)
             resp_data = {'success': True, 'cart_count': cart_count}
             resp = jsonify(resp_data)
-            resp.set_cookie('cart_items', json.dumps(cart_items))
-    except Exception as e:
+            resp.set_cookie('cart_items', json.dumps(cartItems))
+    except:
         error = True
         db.session.rollback()
         print(sys.exc_info())
     finally:
         db.session.close()
     if error:
-        print('An error occurred. ')
         # handle exceptions by returning an error response
-        return jsonify({'success': False, 'error': str(e)})
+        print('An error occurred.')
+        return jsonify({'success': False, 'error': 'error'})
     else:
         return resp
 
-
-@bp.route('/pro-duct/<int:product_id>', methods=['POST'])
-def productInfo(product_id):
-    error = False
-    
-    product = Product.query.filter(Product.id == product_id).first()
-    productDetails = product.format()
-    
-    return jsonify(productDetails)
 
 # Cart page
 @bp.route("/cart")
 # @frontendLogin_required
 def cart():
     page = 'cart'
-    
     products = []
     
     if current_user.is_authenticated:
@@ -116,18 +103,16 @@ def cart():
         # Get the details of each product in the cart
         for cart_product in cart_products:
             product = Product.query.filter_by(id=cart_product.product_id).first()
-            products.append((product, cart_product.quantity))
+            products.append((product, cart_product.quantity, cart_product.size, cart_product.color))
     else:
         getCartItems = request.cookies.get('cart_items')
         if getCartItems:
-            cart_items = json.loads(getCartItems)
+            cartItems = json.loads(getCartItems)
         else:
-            cart_items = []
+            cartItems = []
         
-        for cart_item in cart_items:
+        for cart_item in cartItems:
             product = Product.query.filter_by(id=cart_item['product_id']).first()
-            products.append((product, cart_item['quantity']))
-    
-    print("\n--------->>\n", products, "\n<<---------\n")
+            products.append((product, cart_item['quantity'], cart_item['size'], cart_item['color']))
 
     return render_template('frontend/webpages/cart.html', page=page, products=products)

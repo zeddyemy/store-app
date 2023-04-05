@@ -6,7 +6,7 @@
     border-radius: 0px 0px 30px 30px;
     box-shadow: var(--box-shadow);
     border: 1px solid var(--outline);
-    z-index: 11;
+    z-index: 2;
 }
 .cat-head-container {
     height: 65px;
@@ -68,7 +68,7 @@
     left: 0;
     top: 0;
     bottom: 0;
-    z-index: 10;
+    z-index: 1;
     align-items: unset;
     background: var(--box-bg-clear);
     backdrop-filter: blur(3px);

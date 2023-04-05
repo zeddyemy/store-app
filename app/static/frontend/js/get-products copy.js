@@ -1,6 +1,6 @@
 const theTabItems = document.querySelectorAll('.theTabs-item');
 const loadingDiv = document.getElementById("loading");
-let list = document.getElementById("all-products-wrapper");
+let list = document.getElementById("allProductsWrapper");
 let pagination = document.getElementById("pagination");
 
 

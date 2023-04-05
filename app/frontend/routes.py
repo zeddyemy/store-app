@@ -19,9 +19,7 @@ def index():
     
     # get root categories from db (categories without parent_id)
     rootCategories = Category.query.filter(Category.parent_id == None).all()
-    
     allProducts = getAllProducts(pageNum=pageNum)
-    
     
     return render_template('frontend/webpages/index.html', rootCategories=rootCategories, allProducts=allProducts, page=page)
 
@@ -60,17 +58,12 @@ def showCatProducts(slug):
 # get Products in a category in JSON Format
 @bp.route("/products-json/<catId>")
 def getProducts(catId):
-    catId = catId
     pageNum = request.args.get("page", 1, type=int)
-    print('\n----sub Cat Id----\n', catId, '\n----------\n')
     
     try:
         allProducts = getAllProducts(cat_id=catId, pageNum=pageNum, json=True)
-        print('\n----ALLProducts----\n', allProducts, '\n--------------------\n')
-        
         return allProducts
     except:
-        print('\n -------Nonsense Error-----\n')
         abort(404)
 
 # page to view product details

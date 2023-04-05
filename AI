@@ -1,0 +1,34 @@
+-------------------------------------------------------------------------------------------------------------------------
+Hi, i am developing an e-commerce site with python and flask.
+Right now i am working on "add to cart" functionality.
+
+On the index page i have all products card listed.
+Here is the HTML:
+
+{% for product in allProducts.items %}
+    <article class="the-products card {{ product.category_id }}">
+        <a href="/product/{{ product.slug }}">
+            <div class="card-img product-img">
+                {% if product.product_img %}
+                <img src="{{ product.getMediumImage() }}" alt="">
+                {% else %}
+                <img src="{{ url_for('static', filename='frontend/img/placeholder.png') }}" alt="">
+                {% endif %}
+            </div>
+        </a>
+        <div class="card-text">
+            <a href="/product/{{ product.slug }}">
+                <h2 class="product-title">{{ product.name }}</h2>
+            </a>
+            <span class="product-price">{{ product.sellingPrice }}</span>
+            <span class="btn plusCart" id="" data-product_id="{{ product.id }}" data-sizes="{{ product.sizes }}" data-colors="{{ product.colors }}">+</span>
+        </div>
+    </article>
+{% endfor %}
+
+Now I want a nice-looking bottom sheet to appear when the + button is clicked.
+And I want to use vanilla js to populate the bottom sheet with the product variations so users can select their preference using radio buttons before adding to the cart. The product variations are already present in the "data-sizes" and "data-colors" Attributes of the '+' button
+
+How can I do this?
+Bear in mind that on desktop, the sheet should not be at the bottom but at the center of the screen.
+-------------------------------------------------------------------------------------------------------------------------

@@ -1,6 +1,7 @@
 .vscode/
 env/
 migrations/
+migrationsb/
 __pycache__/
 public/
 todo

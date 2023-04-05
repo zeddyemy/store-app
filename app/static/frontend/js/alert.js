@@ -1,16 +1,55 @@
-function closeAlert(alert, alertBox) {
-    alert.style.opacity = '0';
-    alert.style.margin = '0%';
-    alert.querySelector('.alert-txt').style.padding = '0%';
-    alert.querySelector('.alert-txt').style.fontSize = '0%';
-    alert.querySelector('.close').style.fontSize = '0%';
-    setTimeout(() => alertBox.remove(), 1000);
-}
+const alertBox = document.querySelector('.alertBox');
 
-document.querySelectorAll('.close').forEach(closeBtn => {
-    closeBtn.addEventListener('click', (e) => {
-        const alert = e.target.closest('.alert');
-        const alertBox = alert.closest('.alert-box');
-        closeAlert(alert, alertBox);
-    });
+const toggleAlert = (msg, status, action = 'show') => {
+    if (action === "show") {
+        // create the alert element
+        const alert = document.createElement('div');
+        alert.classList.add('alert', 'fade', status);
+        alert.innerHTML = `
+            <div class="alertTxt">
+                ${msg}
+            </div>
+            <a class="close" data-dismiss="alert">&times;</a>
+        `;
+        // add the alert element to the alert box
+        alertBox.appendChild(alert);
+
+        // animate the alert
+        requestAnimationFrame(() => alert.classList.add('visible'));
+
+        // close the alert automatically after 3000ms
+        setTimeout(() => {
+            toggleAlert(alert.querySelector('.close'), '', 'hide');
+        }, 6000);
+
+    } else if (action === 'hide') {
+        const alert = msg.closest('.alert');
+        if (alert) {
+            // animate the alert
+            requestAnimationFrame(() => {
+                alert.classList.remove('visible');
+                alert.addEventListener('transitionend', () => {
+                    alertBox.removeChild(alert);
+                }, { once: true })
+            });
+        }
+    }
+};
+
+alertBox.addEventListener('click', (event) => {
+    const closeBtn = event.target.closest('.close');
+    if (closeBtn) {
+        toggleAlert(closeBtn, '', 'hide');
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const alerts = document.querySelectorAll('.alert');
+    if (alerts) {
+        alerts.forEach((alert) => {
+            setTimeout(() => {
+                toggleAlert(alert.querySelector('.close'), '', 'hide');
+            }, 5000);
+        });
+    }
 });

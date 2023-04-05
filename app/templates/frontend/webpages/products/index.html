@@ -3,6 +3,7 @@
 
 {% block cssLinks %}
 <link rel="stylesheet" href="{{ url_for('static', filename='frontend/css/product-list.css') }}">
+<link rel="stylesheet" href="../../../static/frontend/css/product-page.css">
 {% endblock %}
 {% block internalCss %}
     <style>
@@ -25,6 +26,17 @@
     </div>
     
     {% include 'frontend/components/all-products.html' %}
+
+    <div class="pagination" id="pagination">
+        <a href="{{url_for('frontend.allProducts', page=allProducts.prev_num)}}"
+            class="page-numbers {% if not allProducts.has_prev %}disabled{% endif %}"> &laquo; </a>
+        {% for page in allProducts.iter_pages() %}
+        <a href="{{ url_for('frontend.allProducts', page=page) }}"
+            class="page-numbers {% if page == allProducts.page %}current{% endif %}">{{ page }}</a>
+        {% endfor %}
+        <a href="{{url_for('frontend.allProducts', page=allProducts.next_num)}}"
+            class="page-numbers {% if not allProducts.has_next %}disabled{% endif %}"> &raquo; </a>
+    </div>
 </main>
 
 {% endblock %}

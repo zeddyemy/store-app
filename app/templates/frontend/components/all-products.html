@@ -1,6 +1,6 @@
 {% if allProducts %}
     {% if allProducts.items %}
-    <article class="all-products-wrapper" id="all-products-wrapper">
+    <article class="allProductsWrapper" id="allProductsWrapper">
             {% for product in allProducts.items %}
             <article class="the-products card {{ product.category_id }}">
                 <a href="/product/{{ product.slug }}">
@@ -17,22 +17,54 @@
                         <h2 class="product-title">{{ product.name }}</h2>
                     </a>
                     <span class="product-price">{{ product.sellingPrice }}</span>
-                    <span class="btn plusCart" id="" data-product_id="{{ product.id }}" data-sizes="{{ product.sizes }}" data-colors="{{ product.colors }}">+</span>
+                    <span class="btn plusCart" data-product_id="{{ product.id }}" data-sizes="{{ product.sizes }}" data-colors="{{ product.colors }}">+</span>
                 </div>
             </article>
             {% endfor %}
     </article>
 
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="closeModal" id="closeModal">&times;</span>
-            <h3 class="title">Select options for product</h3>
-            <!-- add your product options here -->
+    <div id="bottomSheet" class="bottomSheet">
+        <div class="bottomSheetContent">
+            <span class="sheetBar"></span>
+            <div class="title">
+                <span class="closeSheet" id="closeSheet">&times;</span>
+                <h3 class="title">Please Select a variation</h3>
+            </div>
+    
+            <!-- product options here -->
+            <div class="productVariations">
+                <div class="sizeVariation variation">
+                    <span class="sizeTitle variationTitle">Size</span>
+                    <div class="sizeRadios theVariation"></div>
+                </div>
+            
+                <div class="colorVariation variation">
+                    <span class="colorTitle variationTitle">Color</span>
+                    <div class="colorRadios theVariation"></div>
+                </div>
+            
+                <div class="cart-quantity quantityVariation variation">
+                    <span class="quantityTitle variationTitle">Quantity</span>
+                    <div class="theQuantity theVariation">
+                        <button class="quantityBtn minus">-</button>
+                        <input class="quantityInput" type="number" id="" name="quantity" min="1" max="5" value="1">
+                        <button class="quantityBtn plus">+</button>
+                    </div>
+                </div>
+            </div>
+            
+            <p id="validateMsg"></p>
+            <button class="btn addToCart">
+                <span id="btnTxt">Add to Cart</span>
+                <div id="loadIco" class="hidden">
+                    <i class="bx bx-loader bx-md"></i>
+                </div>
+            </button>
         </div>
     </div>
 
     {% else %}
-    <article class="all-products-wrapper" id="all-products-wrapper">
+    <article class="allProductsWrapper" id="allProductsWrapper">
         <article class="the-products card no-products">
             <p> Oops! There are no Products in this category </p>
         </article>
@@ -40,169 +72,4 @@
     {% endif %}
 {% endif %}
 
-<script>
-    const plusCartBtns = document.querySelectorAll('.plusCart');
-    let modal = document.getElementById("myModal");
-
-    plusCartBtns.forEach(function (addBtn) {
-        addBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            const productId = this.dataset.product_id;
-            const productSizes = this.dataset.sizes;
-            const productColors = this.dataset.colors;
-            console.log('productId ==>', productId, '\n', 'productSizes ==>', productSizes, '\n', 'productColors ==>', productColors, '\n');
-            updateModal(productId, productSizes, productColors);
-        });
-    });
-
-    function updateModal(productId, productSizes, productColors) {
-        let modalContent = modal.querySelector('.modal-content');
-
-        // Split the sizes string into an array
-        let sizes = productSizes.split(',').map(size => size.trim());
-        let colors = productColors.split(',').map(color => color.trim());
-        // Create a string of HTML for the radio buttons using the sizes and colors
-        let sizesHtml = sizes.map(size => {
-            return `
-                <label> 
-                    <input type="radio" name="size" value="${size}">
-                    <span>${size}</span>
-                </label>
-            `;
-        }).join('');
-
-        let colorsHtml = colors.map(color => {
-                return `
-                    <label>
-                        <input type="radio" name="color" value="${color}">
-                        <span style="background-color: ${color}"></span>
-                    </label>
-                `;
-            }).join('');
-
-
-        // Update the modal HTML structure with the necessary product options
-        // For example, you could add the product name, price, and a dropdown for selecting the size
-        modalContent.innerHTML = `
-            <span class="modalBar"></span>
-            <div class="title">
-                <span class="closeModal" id="closeModal">&times;</span>
-                <h3 class="title">Please Select a variation</h3>
-            </div>
-            
-            <div class="productOptions">
-                ${productSizes !== '' ? `
-                    <div class="sizeOptions">
-                        <span class="SizeTitle">Size</span>
-                        <div class="theSizeOptions">
-                            ${sizesHtml}
-                        </div>
-                    </div>
-                ` : ''}
-                ${productColors !== '' ? `
-                        <div class="colorOptions">
-                            <span class="colorTitle">Color</span>
-                            <div class="theColorOptions">
-                                ${colorsHtml}
-                            </div>
-                        </div>
-                ` : ''}
-                <div class="cart-quantity">
-                    <div class="cartAddItem">
-                        <button class="cartBtn cartMinus">-</button>
-                        <input class="theQuantity" type="number" id="" name="quantity" min="1" max="5" value="1">
-                        <button class="cartBtn cartPlus">+</button>
-                    </div>
-                </div>
-            <div>
-            <button class="btn addToCart">Add to cart</button>
-            `;
-        
-        toggleModal();
-
-        let addToCartBtn = modalContent.querySelector('.addToCart');
-        addToCartBtn.addEventListener('click', function () {
-            let sizeRadioBtns = modalContent.querySelectorAll('input[name=size]');
-            let colorRadioBtns = modalContent.querySelectorAll('input[name=color]');
-            let selectedSize = '';
-            let selectedColor = '';
-            const url = '/add-to-cart/' + productId;
-
-            // Get the selected size
-            sizeRadioBtns.forEach(function (radioBtn) {
-                if (radioBtn.checked) {
-                    selectedSize = radioBtn.value;
-                }
-            });
-
-            // Get the selected color
-            colorRadioBtns.forEach(function (radioBtn) {
-                if (radioBtn.checked) {
-                    selectedColor = radioBtn.value;
-                }
-            });
-
-            // Retrieve quantity from input field
-            let quantityInput = modalContent.querySelector('.theQuantity');
-            let quantity = quantityInput.value;
-
-            // Send an AJAX request to the Flask route
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    productId: productId,
-                    size: selectedSize,
-                    color: selectedColor,
-                    quantity: quantity
-                })
-            })
-                .then(function (response) {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(function (jsonResponse) {
-                    console.log(jsonResponse)
-                    const success = jsonResponse['success'];
-                    const cartCount = document.querySelector('.cart-count');
-                    let count = 0;
-                    // Update the cart count display
-                    if (success === true) {
-                        console.log('Product added to cart');
-                        const count = jsonResponse['cart_count'];
-                        cartCount.textContent = count;
-                    } else {
-                        console.error('Error adding product to cart');
-                        alert('Error adding product to cart.');
-                        cartCount.textContent = 0;
-                    }
-                })
-                .catch(function (error) {
-                    console.error('There was a problem with the fetch operation:', error);
-                    cartCount.textContent = -0;
-                    throw error;
-                });
-        });
-    }
-
-    function toggleModal() {
-        let closeModal = modal.querySelector('.closeModal');
-        
-        window.addEventListener('click', event => {
-            if (event.target == modal || event.target == closeModal) {
-                modal.style.display = 'none';
-            }
-        });
-
-        modal.style.display = 'flex';
-    }
-
-</script>
-
-<!--
-    'You'll need to add an event listener to the "Add to cart" button inside the modal, and then retrieve the selected size and color (if applicable) from the radio buttons.'
--->
+<script src="{{ url_for('static', filename='frontend/js/add-to-cart.js') }}"></script>

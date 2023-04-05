@@ -16,7 +16,7 @@
 	left: 0;
 	width: 100%;
 	height: var(--header-height);
-	z-index: 9999;
+	z-index: 4;
 	background: transparent;
 	color: var(--header-text-color);
 	-webkit-transition: var(--transition);
@@ -134,7 +134,6 @@
 	right: -5px;
 	background: var(--theme-color);
 	border-radius: 50%;
-	width: 20px;
 	height: 20px;
 	padding: 3px 6px 3px;
 	text-align: center;

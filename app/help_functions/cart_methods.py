@@ -47,7 +47,7 @@ def getCartCount(userId=''):
         getCartItems = request.cookies.get('cart_items')
         if getCartItems:
             cartItems = json.loads(getCartItems)
-            cart_count = sum([item['quantity'] for item in cartItems])
+            cart_count = sum(int(item['quantity']) for item in cartItems)
     
     return cart_count
 

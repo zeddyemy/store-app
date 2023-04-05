@@ -35,28 +35,27 @@
     font-weight: bold;
     color: var(--theme-color);
 }
-.sizeOptions,
-.colorOptions {
-    display: block;
+.productVariations {
+    margin-bottom: 20px;
 }
-.SizeTitle,
-.colorTitle {
+.variation {
+    display: block;
+    margin: 0px 0px 15px 0px;
+}
+.variationTitle {
     font-family: var(--font-two);
     font-size: 0.9em;
 }
-.theSizeOptions,
-.theColorOptions {
+.theVariation {
     display: block;
-    margin-bottom: 15px;
+    margin: 0.5rem 0em 0em 0em;
 }
-.theSizeOptions label,
-.theColorOptions label {
+.theVariation label {
     cursor: pointer;
     display: inline-block;
-    margin: 0.5rem 5px 0rem 0em;
+    margin: 0rem 5px 0rem 0em;
 }
-.theSizeOptions label input,
-.theColorOptions label input {
+.theVariation label input {
     position: absolute;
     top: 0;
     left: 0;
@@ -69,8 +68,7 @@ input[type=radio] {
     padding: 0;
 }
 
-.theSizeOptions label span, 
-.theColorOptions label span {
+.theVariation label span {
     display: inline-block;
     padding: 3px 15px;
     border: 2px solid var(--outline);
@@ -80,11 +78,10 @@ input[type=radio] {
     color: var(--body-text-color);
     transition: var(--transition);
 }
-.theSizeOptions label span:active,
-.theColorOptions label span:active {
+.theVariation label span:active {
     transform: scale(0.90);
 }
-.theSizeOptions label input:checked+span {
+.sizeRadios label input:checked+span {
     border-color: var(--theme-color);
     background-color: transparent;
     background-image: url(../img/noise-light.png);
@@ -93,18 +90,19 @@ input[type=radio] {
     color: var(--theme-color);
 }
 
-.theColorOptions label span {
+.colorRadios label span {
     border-radius: 50%;
     height: 30px;
     width: 30px;
     padding: 0px 0px;
 }
-.theColorOptions label input:checked+span {
+.colorRadios label input:checked+span {
     border-radius: 20px;
     width: 50px;
     outline: max(2px, 0.15em) solid #00000080;
     outline-offset: max(2px, 0.12em);
 }
+
 
 .addToCart {
     margin-top: 1.1em !important;

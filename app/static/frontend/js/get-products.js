@@ -1,6 +1,6 @@
 const theTabItems = document.querySelectorAll('.theTabs-item');
 const loadingDiv = document.getElementById("loading");
-const list = document.getElementById("all-products-wrapper");
+const list = document.getElementById("allProductsWrapper");
 const pagination = document.getElementById("pagination");
 
 const activeTab = document.querySelector('.theTabs-item.active');
@@ -116,7 +116,7 @@ for (let i = 0; i < theTabItems.length; i++) {
                 <p>Oops! There was an error loading products. Please try again later.</p>
             </article>
             `;
-            list.innerHTML += content;
+            list.innerHTML = content;
             loadingDiv.classList.remove('flexCenter');
         });
     }

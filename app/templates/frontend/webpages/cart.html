@@ -9,7 +9,6 @@
 
 {% block content %}
 
-
 <section class="col-12 main">
     <section class="cartWrapper">
         {% if CART_COUNT > 0 %}
@@ -19,7 +18,7 @@
 
             <section class="theCart">
                 <section class="col-6 cartList all-products-wrapper">
-                    {% for product, quantity in products %}
+                    {% for product, quantity, size, color in products %}
                     <article class="cartItem the-products card">
                         <div class="card-img cartItem-img">
                             {% if product.product_img %}
@@ -30,16 +29,19 @@
                         </div>
                         <div class="card-text cartItem-txt">
                             <span class="cartItem-name"> {{ product.name }} </span>
-                            <span class="cartItem-details">Color: pink</span>
-                            <span class="cartItem-details">Size: L</span>
+                            {% if color %}
+                            <span class="cartItem-details">Color: {{ color }}</span>
+                            {% endif %}
+                            {% if size %}
+                            <span class="cartItem-details">Size: {{ size }}</span>
+                            {% endif %}
                             <span class="cartItem-price">₦{{ product.sellingPrice }}</span>
 
-                            <div class="cart-quantity">
-                                <div class="cartAddItem">
-                                    <button class="cartBtn cartMinus">-</button>
-                                    <input class="theQuantity" type="number" id="" name="quantity" min="1" max="5"
-                                        value="{{ quantity }}">
-                                    <button class="cartBtn cartPlus">+</button>
+                            <div class="quantityVariation cartPage">
+                                <div class="theQuantity theVariation cartPage">
+                                    <button class="quantityBtn minus cartPage">-</button>
+                                    <input class="quantityInput cartPage" type="number" id="" name="quantity" min="1" value="{{ quantity }}">
+                                    <button class="quantityBtn plus cartPage">+</button>
                                 </div>
                             </div>
                         </div>
