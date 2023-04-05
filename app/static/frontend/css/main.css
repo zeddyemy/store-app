@@ -142,7 +142,8 @@ body {
 }
 body::before {
     content: "";
-    position: fixed;
+    position: absolute;
+    top: 0;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -154,7 +155,8 @@ body::before {
 }
 body::after {
     content: "";
-    position: fixed;
+    position: absolute;
+    top: 0;
     bottom: 0;
     left: 0;
     width: 100%;
