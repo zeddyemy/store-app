@@ -11,7 +11,6 @@ from app.decorators import frontendLogin_required
 
 # Add to Cart
 @bp.route('/add-to-cart/<int:product_id>', methods=['POST'])
-# @frontendLogin_required
 def addToCart(product_id):
     page = 'add to cart'
     error = False
@@ -69,10 +68,83 @@ def addToCart(product_id):
             resp_data = {'success': True, 'cart_count': cart_count}
             resp = jsonify(resp_data)
             resp.set_cookie('cart_items', json.dumps(cartItems))
-    except:
+    except ValueError as ve:
         error = True
         db.session.rollback()
-        print(sys.exc_info())
+        print(f"ValueError: {ve}")
+    except TypeError as te:
+        error = True
+        db.session.rollback()
+        print(f"TypeError: {te}")
+    except Exception as e:
+        error = True
+        db.session.rollback()
+        print(f"Exception: {e}")
+    finally:
+        db.session.close()
+    if error:
+        # handle exceptions by returning an error response
+        print('An error occurred.')
+        return jsonify({'success': False, 'error': 'error'})
+    else:
+        return resp
+
+# Delete from Cart
+@bp.route('/delete-from-cart', methods=['POST'])
+def deleteFromCart():
+    page = 'delete from cart'
+    error = False
+    
+    try:
+        data = request.get_json()
+        product_id = int(data.get('productId'))
+        size = data.get('size')
+        color = data.get('color')
+        
+        # Check if user is logged in
+        if current_user.is_authenticated:
+            print('\n---------current_user.cart---------\n', current_user.cart, '\n---------------------------\n')
+            
+            cart_product = CartProduct.query.filter_by(cart_id=current_user.cart.id, product_id=product_id, size=size, color=color).first()
+            
+            print('\n---------cart_product---------\n', cart_product, '\n---------------------------\n')
+            if not cart_product:
+                return jsonify({'success': False})
+            else:
+                # Delete the product from the user's cart
+                db.session.delete(cart_product)
+                db.session.commit()
+                cart_count = sum(cart_product.quantity for cart_product in cart.cart_products)
+                resp_data = {'success': True, 'cart_count': cart_count}
+                resp = jsonify(resp_data)
+        else:
+            # Delete the product from the cart stored in the cookie
+            getCartItems = request.cookies.get('cart_items')
+            if getCartItems:
+                cartItems = json.loads(getCartItems)
+            else:
+                cartItems = []
+            
+            updated_cart_items = False
+            for item in cartItems:
+                if item['product_id'] == product_id and item['size'] == size and item['color'] == color:
+                    print('\n-----\n', item, '\n-------\n')
+                    cartItems.remove(item)
+                    updated_cart_items = True
+                    break
+            
+            if not updated_cart_items:
+                # handle case where cart product doesn't exist in cookie
+                return jsonify({'success': False})
+            else:
+                cart_count = sum(item['quantity'] for item in cartItems)
+                resp_data = {'success': True, 'cart_count': cart_count}
+                resp = jsonify(resp_data)
+                resp.set_cookie('cart_items', json.dumps(cartItems))
+    except Exception as e:
+        error = True
+        db.session.rollback()
+        print(f"Exception: {e}")
     finally:
         db.session.close()
     if error:
@@ -116,3 +188,4 @@ def cart():
             products.append((product, cart_item['quantity'], cart_item['size'], cart_item['color']))
 
     return render_template('frontend/webpages/cart.html', page=page, products=products)
+

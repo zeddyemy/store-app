@@ -17,9 +17,14 @@
             </div>
 
             <section class="theCart">
-                <section class="col-6 cartList all-products-wrapper">
+                <section class="cartList col-6">
                     {% for product, quantity, size, color in products %}
-                    <article class="cartItem the-products card">
+                    <article class="cartItem card">
+                        <loader class="loader">
+                            <div class="ico loading">
+                                <i class="bx bx-loader-alt"></i>
+                            </div>
+                        </loader>
                         <div class="card-img cartItem-img">
                             {% if product.product_img %}
                             <img src="{{ product.getThumbImage() }}" alt="">
@@ -36,6 +41,10 @@
                             <span class="cartItem-details">Size: {{ size }}</span>
                             {% endif %}
                             <span class="cartItem-price">₦{{ product.sellingPrice }}</span>
+
+                            <div class="ico delBtn" data-product_id="{{ product.id }}" data-size="{{ size }}" data-color="{{ color }}">
+                                <i class='bx bx-trash'></i>
+                            </div>
 
                             <div class="quantityVariation cartPage">
                                 <div class="theQuantity theVariation cartPage">

@@ -126,14 +126,6 @@ addToCartBtn.addEventListener('click', () => {
         }
     };
 
-    console.log('<-----ADD TO CART LOG----->\n', 'productId =>', productId, '\nproductSizes =>', productSizes, '\nproductColors =>', productColors, '\nselectedSize =>', selectedSize, '\nselectedColor =>', selectedColor, '\nquantity =>', quantity);
-
-    // validate that options have been selected
-    console.log('productSizes => ', productSizes);
-    console.log('productColors => ', productColors);
-    console.log('\n----------------------------\n');
-    console.log('!selectedSize => ', !selectedSize);
-    console.log('!selectedColor => ', !selectedColor);
     if ((productSizes.length && !selectedSize) || (productColors.length && !selectedColor)) {
         validateMsg.style.color = 'red';
         validateMsg.textContent = 'Please make sure you select the necessary variation';

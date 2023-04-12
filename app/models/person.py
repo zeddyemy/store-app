@@ -7,7 +7,7 @@ from app.models.role import Role
 from app.models.image import Image
 
 # Define the User data model. Make sure to add flask_login UserMixin!!
-class Person(db.Model, UserMixin):
+class Personn(db.Model, UserMixin):
     __tablename__ = "person"
     
     id = db.Column(db.Integer(), primary_key=True)
@@ -20,6 +20,7 @@ class Person(db.Model, UserMixin):
     # Relationships
     role_id = db.Column(db.Integer, db.ForeignKey('role.id', ondelete='CASCADE'), nullable=False,)
     role = db.relationship('Role')
+    cart = db.relationship('Cart', backref='user', lazy=True)
     profile = db.relationship('Profile', back_populates="person", uselist=False, cascade="all, delete-orphan")
     address = db.relationship('Address', back_populates="person", uselist=False, cascade="all, delete-orphan")
     

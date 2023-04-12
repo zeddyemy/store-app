@@ -104,7 +104,7 @@ a.page-numbers:hover {
     z-index: 6;
     overflow: hidden;
     background-color: transparent;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.4s ease-in-out;
 }
 .bottomSheet::before {
     content: "";

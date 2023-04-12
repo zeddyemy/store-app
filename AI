@@ -32,3 +32,22 @@ And I want to use vanilla js to populate the bottom sheet with the product varia
 How can I do this?
 Bear in mind that on desktop, the sheet should not be at the bottom but at the center of the screen.
 -------------------------------------------------------------------------------------------------------------------------
+
+// Select the card to be removed
+const cardToRemove = document.querySelector('#card-to-remove');
+
+// Select the cards below the card to be removed
+const cardsBelow = Array.from(cardToRemove.nextElementSibling);
+
+// Animate the cards below
+cardsBelow.forEach(card => {
+  // Calculate the amount to move the card
+  const cardHeight = cardToRemove.offsetHeight;
+  const newPosition = parseFloat(card.style.transform.replace(/translateY\((-?\d+)px\)/, '$1')) - cardHeight;
+
+  // Set the new position of the card
+  card.style.transform = `translateY(${newPosition}px)`;
+});
+
+// Remove the card to be removed
+cardToRemove.remove();

@@ -3,8 +3,9 @@ from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import desc
 from flask_migrate import Migrate # Imported Migrate from flask_migrate.
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 from app.models.person import Person
+from app.models.cart import Cart
 
 from config import Config
 from app.extensions import db
@@ -44,7 +45,13 @@ def create_app(config_class=Config):
     
     @app.route('/test/')
     def test_page():
-        
-        return '<h1>Testing the Flask Application Factory Pattern</h1>'
+        cart = Cart.query.filter_by(person_id=current_user.id).first()
+
+        if cart:
+            # The person has a cart record
+            return '<h1>The person has a cart record</h1>'
+        else:
+            # The person does not have a cart record
+            return '<h1>The person does not have a cart record</h1>'
     
     return app

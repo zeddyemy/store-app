@@ -41,6 +41,10 @@
     backdrop-filter: blur(1px);
     
 }
+.faded {
+    opacity: 0.7;
+    pointer-events: none;
+}
 .cartItem-img {
     --width: calc(105px - 20px);
     float: left;
@@ -92,6 +96,14 @@
 }
 .quantityInput.cartPage {
     width: 35px !important;
+}
+.ico.delBtn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: -2px 0px;
+    font-size: 1em;
+    transform: scale(0.9)
 }
 
 .cartSummary {
