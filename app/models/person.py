@@ -7,7 +7,7 @@ from app.models.role import Role
 from app.models.image import Image
 
 # Define the User data model. Make sure to add flask_login UserMixin!!
-class Personn(db.Model, UserMixin):
+class Person(db.Model, UserMixin):
     __tablename__ = "person"
     
     id = db.Column(db.Integer(), primary_key=True)
