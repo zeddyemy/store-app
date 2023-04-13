@@ -252,26 +252,6 @@ a.btn {
     bottom: 10px;
 }
 
-loader {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1;
-    opacity: 0;
-    border-radius: var(--rounded-post);
-    background-color: rgba(0, 0, 0, 0.5);
-    transition: opacity 0.2s ease-in-out;
-}
-.ico.loading {
-    transform: scale(3.7);
-}
-.ico.loading i {
-    color: var(--theme-color) !important;
-}
-
 /* CARD */
 .card {
     border-radius: var(--rounded-post);

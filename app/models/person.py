@@ -20,7 +20,7 @@ class Person(db.Model, UserMixin):
     # Relationships
     role_id = db.Column(db.Integer, db.ForeignKey('role.id', ondelete='CASCADE'), nullable=False,)
     role = db.relationship('Role')
-    cart = db.relationship('Cart', backref='user', lazy=True)
+    cart = db.relationship('Cart', backref='user', uselist=False, cascade="all, delete-orphan")
     profile = db.relationship('Profile', back_populates="person", uselist=False, cascade="all, delete-orphan")
     address = db.relationship('Address', back_populates="person", uselist=False, cascade="all, delete-orphan")
     

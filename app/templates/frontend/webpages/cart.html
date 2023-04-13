@@ -20,11 +20,6 @@
                 <section class="cartList col-6">
                     {% for product, quantity, size, color in products %}
                     <article class="cartItem card">
-                        <loader class="loader">
-                            <div class="ico loading">
-                                <i class="bx bx-loader-alt"></i>
-                            </div>
-                        </loader>
                         <div class="card-img cartItem-img">
                             {% if product.product_img %}
                             <img src="{{ product.getThumbImage() }}" alt="">

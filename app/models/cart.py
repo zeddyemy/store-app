@@ -17,6 +17,26 @@ class Cart(db.Model):
     updated_on = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     products = db.relationship('Product', secondary=cart_products, backref=db.backref('carts', lazy=True))
     cart_products = db.relationship('CartProduct', backref='cart', lazy=True)
+    
+    
+    def addProduct(self, product, size='', color='', quantity=1):
+        cart_product = CartProduct.query.filter_by(cart_id=self.id, product_id=product.id, size=size, color=color).first()
+        if cart_product:
+            cart_product.quantity += quantity
+        else:
+            cart_product = CartProduct(cart=self, product=product, quantity=quantity, size=size, color=color)
+            db.session.add(cart_product)
+        db.session.commit()
+
+    def deleteProduct(self, product_id, size='', color=''):
+        cart_product = CartProduct.query.filter_by(cart_id=self.id, product_id=product_id, size=size, color=color).first()
+        if cart_product:
+            db.session.delete(cart_product)
+            db.session.commit()
+    
+    @property
+    def cartCount(self):
+        return sum(cart_product.quantity for cart_product in self.cart_products)
 
 class CartProduct(db.Model):
     id = db.Column(db.Integer, primary_key=True)

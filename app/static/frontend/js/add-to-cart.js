@@ -80,9 +80,10 @@ function showBottomSheet(productId, productSizes, productColors) {
     colorOptionsLabel.innerHTML = '';
     theSizeOptions.innerHTML = '';
     theColorOptions.innerHTML = '';
+    validateMsg.textContent = '';
 
     if (!productSizes && !productColors) {
-        bottomSheetTitle.innerHTML = 'Please select the quantity of your choice'
+        bottomSheetTitle.innerHTML = 'Please select quantity'
     }
 
     if (productSizes !== '') {

@@ -35,16 +35,9 @@ def addToCart(product_id):
                 db.session.add(cart)
                 db.session.commit()
             
-            cart_product = CartProduct.query.filter_by(cart_id=cart.id, product_id=product.id, size=size, color=color).first()
-            if cart_product:
-                cart_product.quantity += quantity
-            else:
-                cart_product = CartProduct(cart_id=cart.id, product_id=product.id, size=size, color=color, quantity=quantity)
-                db.session.add(cart_product)
-            
-            db.session.commit()
-            cart_count = sum(cart_product.quantity for cart_product in cart.cart_products)
-            resp_data = {'success': True, 'cart_count': cart_count}
+            cart.addProduct(product, size, color, quantity)
+            cartCount = cart.cartCount
+            resp_data = {'success': True, 'cart_count': cartCount}
             resp = jsonify(resp_data)
         else:
             # Add the product to the cart stored in the cookie
@@ -103,19 +96,17 @@ def deleteFromCart():
         
         # Check if user is logged in
         if current_user.is_authenticated:
-            print('\n---------current_user.cart---------\n', current_user.cart, '\n---------------------------\n')
+            cart = Cart.query.filter_by(person_id=current_user.id).first()
             
-            cart_product = CartProduct.query.filter_by(cart_id=current_user.cart.id, product_id=product_id, size=size, color=color).first()
+            cart_product = CartProduct.query.filter_by(cart_id=cart.id, product_id=product_id, size=size, color=color).first()
             
-            print('\n---------cart_product---------\n', cart_product, '\n---------------------------\n')
             if not cart_product:
                 return jsonify({'success': False})
             else:
                 # Delete the product from the user's cart
-                db.session.delete(cart_product)
-                db.session.commit()
-                cart_count = sum(cart_product.quantity for cart_product in cart.cart_products)
-                resp_data = {'success': True, 'cart_count': cart_count}
+                cart.deleteProduct(product_id, size, color)
+                cartCount = cart.cartCount
+                resp_data = {'success': True, 'cart_count': cartCount}
                 resp = jsonify(resp_data)
         else:
             # Delete the product from the cart stored in the cookie

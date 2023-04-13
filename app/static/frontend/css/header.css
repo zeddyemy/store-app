@@ -125,6 +125,7 @@
 	appearance: none;
 	-webkit-appearance: none;
 	color: var(--header-text-color);
+	pointer-events: none;
 }
 .ico .cart-count {
 	font-size: .75rem;
