@@ -20,7 +20,7 @@ const toggleAlert = (msg, status, action = 'show') => {
         // close the alert automatically after 3000ms
         setTimeout(() => {
             toggleAlert(alert.querySelector('.close'), '', 'hide');
-        }, 6000);
+        }, 5000);
 
     } else if (action === 'hide') {
         const alert = msg.closest('.alert');

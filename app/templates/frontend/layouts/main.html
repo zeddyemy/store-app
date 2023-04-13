@@ -7,8 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='library/boxicons/css/boxicons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='library/boxicons/css/only.used.boxicons.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='frontend/css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='frontend/css/header.css') }}">
     
     {% block cssLinks %}{% endblock %}
     
@@ -16,19 +17,14 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='frontend/css/form.css') }}">
     {% endif %}
 
-    {% if page != 'auth' %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='frontend/css/header.css') }}">
     <script defer type="text/javascript" src="{{ url_for('static', filename='frontend/js/header.js') }}"></script>
-    {% endif %}
 
     {% block internalCss %}{% endblock %}
 </head>
 
 <body>
     
-    {% if page != 'auth' %}
     {% include 'frontend/components/header.html' %}
-    {% endif %}
         
     <!-- Begin page content -->
     <section class="wrapper {% if form %}form-page{% endif %} {{page}}-page" id="wrapper">
@@ -59,11 +55,9 @@
 
     <script defer type="text/javascript" src="{{ url_for('static', filename='frontend/library/flickity/flickity.min.js') }}"></script>
     <script defer type="text/javascript" src="{{ url_for('static', filename='frontend/library/flickity/flickity-addons.js') }}"></script>
+    
     <script defer type="text/javascript" src="{{ url_for('static', filename='library/lazysizes/lazysizes.min.js') }}"></script>
     <script defer type="text/javascript" src="{{ url_for('static', filename='frontend/js/darkmode.js') }}"></script>
-
-    
-    
     <script src="{{ url_for('static', filename='frontend/js/alert.js') }}"></script>
     
     

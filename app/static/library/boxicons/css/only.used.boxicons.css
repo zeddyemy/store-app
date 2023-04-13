@@ -87,9 +87,9 @@
 .bx-pencil:before {
     content: "\ebb1";
 }
-.bx-loader:before {
-	content: "\eb45";
-}
 .bx-loader-alt:before {
 	content: "\eb46";
+}
+.bxs-trash:before {
+    content: "\eed4";
 }
