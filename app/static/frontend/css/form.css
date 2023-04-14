@@ -4,7 +4,7 @@
 }
 
 .wrapper.form-page.expand-wrapper {
-    margin: 120px 0px 0px 0px;
+    margin-top: var(--header-height) !important;
 }
 
 .form-wrapper {

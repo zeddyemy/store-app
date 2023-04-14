@@ -90,6 +90,6 @@
 .bx-loader-alt:before {
 	content: "\eb46";
 }
-.bxs-trash:before {
-    content: "\eed4";
+.bx-trash:before {
+    content: "\ec50";
 }

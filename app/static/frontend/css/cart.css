@@ -68,6 +68,7 @@
     font-size: 0.8em;
     font-weight: bold;
     display: block;
+    color: var(--body-text-color);
 }
 .cartItem-details {
     text-align: left;
@@ -105,6 +106,9 @@
     margin: -2px 0px;
     font-size: 1em;
     transform: scale(0.9)
+}
+.ico.delBtn .bx {
+    color: var(--body-text-color);
 }
 
 .cartSummary {
