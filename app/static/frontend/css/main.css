@@ -152,8 +152,8 @@ body::after {
     background-repeat: no-repeat;
     background-size: cover;
     background-image: var(--body-background), var(--bg-image);
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
 }
 body::after {
     background-repeat: round;
