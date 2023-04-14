@@ -134,10 +134,9 @@ body.dark-theme {
 }
 
 body {
-    position: absolute;
+    position: initial;
     transition: 0.3s;
     color: var(--body-text-color);
-    overscroll-behavior: contain;
 }
 body::before,
 body::after {
@@ -154,7 +153,6 @@ body::after {
     background-image: var(--body-background), var(--bg-image);
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
-    overflow: hidden;
 }
 body::after {
     background-repeat: round;
