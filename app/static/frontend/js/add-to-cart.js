@@ -23,6 +23,7 @@ const toggleLoading = () => {
 };
 
 const toggleSheet = () => {
+    document.querySelector('body').classList.toggle('stopScroll')
     bottomSheet.classList.toggle('visible')
 }
 

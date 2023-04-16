@@ -31,10 +31,8 @@
 }
 
 .header.expand-1x {
-	height: 120px;
-	box-shadow: var(--box-shadow);
+	height: calc(var(--header-height) + 60px);
 	border-radius: 0px 0px 30px 30px;
-	background: var(--header-bg-color) !important;
 }
 @media screen and (min-width: 800px) {
 	.header.expand-1x {
@@ -43,7 +41,8 @@
 	}
 }
 .default {
-	background: transparent;
+	box-shadow: var(--box-shadow);
+	background: var(--header-bg-color);
 	background-image: var(--header-bg-image);
 }
 
@@ -258,7 +257,7 @@
 		width: calc(100% - var(--pad));
 		display: block;
 		position: absolute;
-		top: 51px;
+		top: calc(var(--header-height));
 		text-align: center;
 		display: none;
 	}

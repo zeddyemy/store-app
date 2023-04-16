@@ -108,7 +108,7 @@ window.addEventListener("scroll", function () {
     if (!isScrolling) {
         window.requestAnimationFrame(function () {
             header.classList[(currentScrollPos > lastScrollPos) && (lastScrollPos > 0) ? 'add' : 'remove']('hide');
-            header.style.background = currentScrollPos > headerHeight ? "var(--header-bg-color)" : "transparent";
+            // header.style.background = currentScrollPos > headerHeight ? "var(--header-bg-color)" : "transparent";
             
             // Store the current scroll position
             lastScrollPos = currentScrollPos;
